@@ -4,6 +4,11 @@
 -- lower level configuration and more robust one. (which-key will
 -- automatically pick-up stored data by this setting.)
 --
+-- TODO
+-- telescope-live-grep-args 확인
+-- autosave시 null-ls 동작하게
+-- markdown-and-latex 플러그인 확인
+--
 local utils = require "astronvim.utils"
 local get_icon = utils.get_icon
 local is_available = utils.is_available
@@ -12,7 +17,7 @@ local sections = {
   [","] = { desc = get_icon("Debugger", 1, true) .. "Debugger" },
 }
 
-return {
+local maps = {
   [""] = {
     ["("] = { "10k" },
     [")"] = { "10j" },
@@ -38,9 +43,9 @@ return {
     ["<leader><CR>"] = { "i<CR><ESC>k", desc = "현재 커서 위치에서 줄바꿈" },
 
     -- Split
-    -- ["<leader>\\"] = { "<C-w>v<C-w>l", desc = "세로 분할" },
     ["<leader>\\"] = { "<C-w>v", desc = "세로 분할" },
     ["<leader>-"] = { "<C-w>s", desc = "가로 분할" },
+    ["<leader>m"] = { "<C-w>x", desc = "가로 분할" },
     ["<C-=>"] = { "<C-w>>" },
     ["<C-9>"] = { "<C-w><" },
     ["<C-_>"] = { "<C-w>-" },
@@ -57,28 +62,17 @@ return {
       desc = "Previous buffer",
     },
 
-    -- multi cursor
-    ["mm"] = { function() require("multicursors").start() end, desc = "multicursor start" },
-    ["m/"] = { function() require("multicursors").new_pattern() end, desc = "multicursor search" },
-
-    -- telescope
-    ["<leader>f/"] = { function() require("telescope.builtin").live_grep() end, desc = "Find words" },
-    ["<leader>f?"] = {
+    -- NeoTree
+    ["<leader>E"] = {
       function()
-        require("telescope.builtin").live_grep {
-          additional_args = function(args) return vim.list_extend(args, { "--hidden", "--no-ignore" }) end,
-        }
+        if vim.bo.filetype == "neo-tree" then
+          vim.cmd.wincmd "p"
+        else
+          vim.cmd.Neotree "focus"
+        end
       end,
-      desc = "Find words(숨김파일포함)",
+      desc = "Toggle Explorer Focus",
     },
-    ["<leader>fe"] = {
-      function() require("telescope.builtin").oldfiles { cwd_only = true } end,
-      desc = "Find history in CWD",
-    },
-    ["<leader>fE"] = { function() require("telescope.builtin").oldfiles {} end, desc = "Find history All Path" },
-    ["<leader>fo"] = false,
-    ["<leader>fw"] = false,
-    ["<leader>fW"] = false,
 
     -- Plugin Manager (<leader>p => <leader>')
     ["<leader>'"] = sections["'"],
@@ -94,11 +88,6 @@ return {
     ["<leader>'v"] = { "<cmd>AstroVersion<cr>", desc = "AstroNvim Version" },
     ["<leader>'l"] = { "<cmd>AstroChangelog<cr>", desc = "AstroNvim Changelog" },
 
-    -- Disabled
-    ["<leader>q"] = false,
-    ["\\"] = false,
-    ["|"] = false,
-
     -- surround
     ["<leader>y"] = { "ysiw", remap = false, desc = "Surround word" },
   },
@@ -108,7 +97,99 @@ return {
     ["K"] = { ":move '<-2<CR>gv-gv", desc = "한줄 위로 올림" },
     ["<"] = { "<gv" },
     [">"] = { ">gv" },
-
-    ["mm"] = { function() require("multicursors").search_visual() end, desc = "multicursor search" },
   },
 }
+
+-- Telescope
+if is_available "telescope.nvim" then
+  maps.n["<leader>f/"] = { function() require("telescope.builtin").live_grep() end, desc = "Find words" }
+  maps.n["<leader>f?"] = {
+    function()
+      require("telescope.builtin").live_grep {
+        additional_args = function(args) return vim.list_extend(args, { "--hidden", "--no-ignore" }) end,
+      }
+    end,
+    desc = "Find words(숨김파일포함)",
+  }
+  maps.n["<leader>fe"] = {
+    function() require("telescope.builtin").oldfiles { cwd_only = true } end,
+    desc = "Find history in CWD",
+  }
+  maps.n["<leader>fE"] = { function() require("telescope.builtin").oldfiles {} end, desc = "Find history All Path" }
+  maps.n["<leader>fz"] = { function() require("telescope").extensions.zoxide.list() end, desc = "Find directories" }
+end
+
+-- Session Manager (<leader>S => <leader>s)
+if is_available "neovim-session-manager" then
+  maps.n["<leader>s"] = sections.s
+  maps.n["<leader>sl"] = { "<cmd>SessionManager! load_last_session<cr>", desc = "Load last session" }
+  maps.n["<leader>ss"] = { "<cmd>SessionManager! save_current_session<cr>", desc = "Save this session" }
+  maps.n["<leader>sd"] = { "<cmd>SessionManager! delete_session<cr>", desc = "Delete session" }
+  maps.n["<leader>sf"] = { "<cmd>SessionManager! load_session<cr>", desc = "Search sessions" }
+  maps.n["<leader>s."] =
+    { "<cmd>SessionManager! load_current_dir_session<cr>", desc = "Load current directory session" }
+end
+if is_available "resession.nvim" then
+  maps.n["<leader>s"] = sections.s
+  maps.n["<leader>sl"] = { function() require("resession").load "Last Session" end, desc = "Load last session" }
+  maps.n["<leader>ss"] = { function() require("resession").save() end, desc = "Save this session" }
+  maps.n["<leader>st"] = { function() require("resession").save_tab() end, desc = "Save this tab's session" }
+  maps.n["<leader>sd"] = { function() require("resession").delete() end, desc = "Delete a session" }
+  maps.n["<leader>sf"] = { function() require("resession").load() end, desc = "Load a session" }
+  maps.n["<leader>s."] = {
+    function() require("resession").load(vim.fn.getcwd(), { dir = "dirsession" }) end,
+    desc = "Load current directory session",
+  }
+end
+
+-- Multicursor
+if is_available "multicursors.nvim" then
+  -- multi cursor
+  maps.n["mm"] = { function() require("multicursors").start() end, desc = "multicursor start" }
+  maps.n["m/"] = { function() require("multicursors").new_pattern() end, desc = "multicursor search" }
+  maps.x["mm"] = { function() require("multicursors").search_visual() end, desc = "multicursor search" }
+end
+
+-- Package Manager (<leader>p => <leader>')
+if is_available "mason.nvim" then
+  maps.n["<leader>'m"] = { "<cmd>Mason<cr>", desc = "Mason Installer" }
+  maps.n["<leader>'M"] = { "<cmd>MasonUpdateAll<cr>", desc = "Mason Update" }
+end
+
+-- ###############Disabled Keys################
+maps.n["|"] = false
+maps.n["\\"] = false
+maps.n["]t"] = false
+maps.n["[t"] = false
+
+maps.n["<leader>h"] = false
+
+maps.n["<leader>pm"] = false
+maps.n["<leader>pM"] = false
+maps.n["<leader>pi"] = false
+maps.n["<leader>ps"] = false
+maps.n["<leader>pS"] = false
+maps.n["<leader>pu"] = false
+maps.n["<leader>pU"] = false
+maps.n["<leader>pa"] = false
+maps.n["<leader>pA"] = false
+maps.n["<leader>pv"] = false
+maps.n["<leader>pl"] = false
+
+maps.n["<leader>S"] = false
+maps.n["<leader>Sl"] = false
+maps.n["<leader>Ss"] = false
+maps.n["<leader>Sd"] = false
+maps.n["<leader>Sf"] = false
+maps.n["<leader>St"] = false
+maps.n["<leader>Sf"] = false
+maps.n["<leader>S."] = false
+
+maps.n["<leader>c"] = false
+maps.n["<leader>C"] = false
+
+maps.n["<leader>fo"] = false
+maps.n["<leader>fw"] = false
+maps.n["<leader>fW"] = false
+-- ##########################################
+return maps
