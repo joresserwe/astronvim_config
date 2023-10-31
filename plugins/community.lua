@@ -9,6 +9,9 @@ return {
   --
   { import = "astrocommunity.bars-and-lines.lualine-nvim" },
 
+  -- zoxide(가장 빈번히 방문한 디렉토리)를 telescope와 결합해서 사용할 수 있다.
+  { import = "astrocommunity.fuzzy-finder.telescope-zoxide" },
+
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.pack.java" },
   { import = "astrocommunity.pack.kotlin" },
@@ -17,4 +20,6 @@ return {
   { import = "astrocommunity.pack.docker" },
   { import = "astrocommunity.pack.typescript" },
   { import = "astrocommunity.pack.helm" },
+
+  { import = "astrocommunity.motion.nvim-surround" },
 }
