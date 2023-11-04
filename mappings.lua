@@ -97,6 +97,14 @@ local maps = {
     ["K"] = { ":move '<-2<CR>gv-gv", desc = "한줄 위로 올림" },
     ["<"] = { "<gv" },
     [">"] = { ">gv" },
+    ["mf"] = { "<C-v>^<S-i>", desc = "multicursor for visual" },
+    ["mb"] = { "<C-v>$<S-a>", desc = "multicursor for visual" },
+  },
+  t = {
+    ["<C-=>"] = { "<C-w>>" },
+    ["<C-9>"] = { "<C-w><" },
+    ["<C-_>"] = { "<C-w>-" },
+    ["<C-0>"] = { "<C-w>+" },
   },
 }
 
@@ -129,6 +137,7 @@ if is_available "neovim-session-manager" then
   maps.n["<leader>s."] =
     { "<cmd>SessionManager! load_current_dir_session<cr>", desc = "Load current directory session" }
 end
+
 if is_available "resession.nvim" then
   maps.n["<leader>s"] = sections.s
   maps.n["<leader>sl"] = { function() require("resession").load "Last Session" end, desc = "Load last session" }
@@ -144,7 +153,6 @@ end
 
 -- Multicursor
 if is_available "multicursors.nvim" then
-  -- multi cursor
   maps.n["mm"] = { function() require("multicursors").start() end, desc = "multicursor start" }
   maps.n["m/"] = { function() require("multicursors").new_pattern() end, desc = "multicursor search" }
   maps.x["mm"] = { function() require("multicursors").search_visual() end, desc = "multicursor search" }
@@ -185,7 +193,6 @@ maps.n["<leader>St"] = false
 maps.n["<leader>Sf"] = false
 maps.n["<leader>S."] = false
 
-maps.n["<leader>c"] = false
 maps.n["<leader>C"] = false
 
 maps.n["<leader>fo"] = false

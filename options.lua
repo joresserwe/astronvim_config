@@ -2,8 +2,11 @@
 return {
   opt = {
     -- set to true or false etc.
+    autoindent = true, -- 자동 드여쓰기 기능
+    --cmdheight = 1, -- more space in the neovim command line for displaying messages
     relativenumber = true, -- sets vim.opt.relativenumber
     number = true, -- sets vim.opt.number
+    smartindent = true, -- 들여쓰기를 자동으로 맞춘다
     spell = false, -- sets vim.opt.spell
     signcolumn = "auto", -- sets vim.opt.signcolumn to auto
     wrap = false, -- sets vim.opt.wrap
