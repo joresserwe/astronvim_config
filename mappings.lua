@@ -15,6 +15,7 @@ local is_available = utils.is_available
 local sections = {
   ["'"] = { desc = get_icon("Package", 1, true) .. "Packages" },
   [","] = { desc = get_icon("Debugger", 1, true) .. "Debugger" },
+  ["s"] = { desc = get_icon("Session", 1, true) .. "Session" },
 }
 
 local maps = {
@@ -45,14 +46,13 @@ local maps = {
     -- Split
     ["<leader>\\"] = { "<C-w>v", desc = "세로 분할" },
     ["<leader>-"] = { "<C-w>s", desc = "가로 분할" },
-    ["<leader>m"] = { "<C-w>x", desc = "가로 분할" },
+    ["<leader>m"] = { "<C-w>x", desc = "분할창 순서 변경" },
     ["<C-=>"] = { "<C-w>>" },
     ["<C-9>"] = { "<C-w><" },
     ["<C-_>"] = { "<C-w>-" },
     ["<C-0>"] = { "<C-w>+" },
 
     ["<leader>w"] = { function() require("astronvim.utils.buffer").close() end, desc = "Close buffer" },
-    ["<leader>qa"] = { function() require("astronvim.utils.buffer").close_all() end, desc = "Close all buffers" },
     ["<tab>"] = {
       function() require("astronvim.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end,
       desc = "Next buffer",
@@ -63,9 +63,10 @@ local maps = {
     },
 
     -- NeoTree
-    ["<leader>E"] = {
+    ["<leader>e"] = {
       function()
         if vim.bo.filetype == "neo-tree" then
+          vim.cmd.wincmd "c"
           vim.cmd.wincmd "p"
         else
           vim.cmd.Neotree "focus"
@@ -123,8 +124,13 @@ if is_available "telescope.nvim" then
     function() require("telescope.builtin").oldfiles { cwd_only = true } end,
     desc = "Find history in CWD",
   }
+  maps.n["<leader>fd"] = { function() require("telescope.builtin").diagnostics() end, desc = "Find diagonostics" }
   maps.n["<leader>fE"] = { function() require("telescope.builtin").oldfiles {} end, desc = "Find history All Path" }
   maps.n["<leader>fz"] = { function() require("telescope").extensions.zoxide.list() end, desc = "Find directories" }
+  if is_available "telescope-file-browser.nvim" then
+    maps.n["sf"] =
+      { function() require("telescope").extensions.file_browser.file_browser {} end, desc = "Open File Browser" }
+  end
 end
 
 -- Session Manager (<leader>S => <leader>s)
@@ -164,7 +170,48 @@ if is_available "mason.nvim" then
   maps.n["<leader>'M"] = { "<cmd>MasonUpdateAll<cr>", desc = "Mason Update" }
 end
 
+-- Debugger (<leader>d => <leader>.d)
+if is_available "nvim-dap" then
+  maps.n["<leader>,"] = sections[","]
+  maps.x["<leader>,"] = sections[","]
+  maps.n["<leader>,b"] = { function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint (F9)" }
+  maps.n["<leader>,B"] = { function() require("dap").clear_breakpoints() end, desc = "Clear Breakpoints" }
+  maps.n["<leader>,c"] = { function() require("dap").continue() end, desc = "Start/Continue (F5)" }
+  maps.n["<leader>,C"] = {
+    function()
+      vim.ui.input({ prompt = "Condition: " }, function(condition)
+        if condition then require("dap").set_breakpoint(condition) end
+      end)
+    end,
+    desc = "Conditional Breakpoint (S-F9)",
+  }
+  maps.n["<leader>,i"] = { function() require("dap").step_into() end, desc = "Step Into (F11)" }
+  maps.n["<leader>,o"] = { function() require("dap").step_over() end, desc = "Step Over (F10)" }
+  maps.n["<leader>,O"] = { function() require("dap").step_out() end, desc = "Step Out (S-F11)" }
+  maps.n["<leader>,q"] = { function() require("dap").close() end, desc = "Close Session" }
+  maps.n["<leader>,Q"] = { function() require("dap").terminate() end, desc = "Terminate Session (S-F5)" }
+  maps.n["<leader>,p"] = { function() require("dap").pause() end, desc = "Pause (F6)" }
+  maps.n["<leader>,r"] = { function() require("dap").restart_frame() end, desc = "Restart (C-F5)" }
+  maps.n["<leader>,R"] = { function() require("dap").repl.toggle() end, desc = "Toggle REPL" }
+  maps.n["<leader>,s"] = { function() require("dap").run_to_cursor() end, desc = "Run To Cursor" }
+
+  if is_available "nvim-dap-ui" then
+    maps.n["<leader>,E"] = {
+      function()
+        vim.ui.input({ prompt = "Expression: " }, function(expr)
+          if expr then require("dapui").eval(expr, { enter = true }) end
+        end)
+      end,
+      desc = "Evaluate Input",
+    }
+    maps.x["<leader>,E"] = { function() require("dapui").eval() end, desc = "Evaluate Input" }
+    maps.n["<leader>,u"] = { function() require("dapui").toggle() end, desc = "Toggle Debugger UI" }
+    maps.n["<leader>,h"] = { function() require("dap.ui.widgets").hover() end, desc = "Debugger Hover" }
+  end
+end
+
 -- ###############Disabled Keys################
+maps.n["s"] = false
 maps.n["|"] = false
 maps.n["\\"] = false
 maps.n["]t"] = false
@@ -198,5 +245,22 @@ maps.n["<leader>C"] = false
 maps.n["<leader>fo"] = false
 maps.n["<leader>fw"] = false
 maps.n["<leader>fW"] = false
+
+maps.n["<leader>db"] = false
+maps.n["<leader>dB"] = false
+maps.n["<leader>dc"] = false
+maps.n["<leader>dC"] = false
+maps.n["<leader>dE"] = false
+maps.n["<leader>dh"] = false
+maps.n["<leader>di"] = false
+maps.n["<leader>do"] = false
+maps.n["<leader>dO"] = false
+maps.n["<leader>dq"] = false
+maps.n["<leader>dQ"] = false
+maps.n["<leader>dp"] = false
+maps.n["<leader>dr"] = false
+maps.n["<leader>dR"] = false
+maps.n["<leader>ds"] = false
+maps.n["<leader>du"] = false
 -- ##########################################
 return maps
