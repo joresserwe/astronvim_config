@@ -124,12 +124,28 @@ if is_available "telescope.nvim" then
     function() require("telescope.builtin").oldfiles { cwd_only = true } end,
     desc = "Find history in CWD",
   }
-  maps.n["<leader>fd"] = { function() require("telescope.builtin").diagnostics() end, desc = "Find diagonostics" }
   maps.n["<leader>fE"] = { function() require("telescope.builtin").oldfiles {} end, desc = "Find history All Path" }
   maps.n["<leader>fz"] = { function() require("telescope").extensions.zoxide.list() end, desc = "Find directories" }
+
+  maps.n["<leader>fs"] = {
+    function()
+      local aerial_avail, _ = pcall(require, "aerial")
+      if aerial_avail then
+        require("telescope").extensions.aerial.aerial()
+      else
+        require("telescope.builtin").lsp_document_symbols()
+      end
+    end,
+    desc = "Search symbols",
+  }
+
   if is_available "telescope-file-browser.nvim" then
     maps.n["sf"] =
       { function() require("telescope").extensions.file_browser.file_browser {} end, desc = "Open File Browser" }
+  end
+  if is_available "telescope-import.nvim" then
+    maps.n["<leader>fi"] =
+      { function() require("telescope").extensions.import.import {} end, desc = "Open import Browser" }
   end
 end
 
@@ -169,6 +185,11 @@ if is_available "mason.nvim" then
   maps.n["<leader>'m"] = { "<cmd>Mason<cr>", desc = "Mason Installer" }
   maps.n["<leader>'M"] = { "<cmd>MasonUpdateAll<cr>", desc = "Mason Update" }
 end
+
+-- AutoSave
+-- if is_available "auto-save.nvim" then
+--   maps.n["<leader>uA"] = { "<cmd>ASToggle<cr>", desc = "Toggle Autosave" }
+-- end
 
 -- Debugger (<leader>d => <leader>.d)
 if is_available "nvim-dap" then
@@ -262,5 +283,7 @@ maps.n["<leader>dr"] = false
 maps.n["<leader>dR"] = false
 maps.n["<leader>ds"] = false
 maps.n["<leader>du"] = false
+
+maps.n["<leader>ls"] = false
 -- ##########################################
 return maps

@@ -1,8 +1,27 @@
-local utils = require "astronvim.utils"
-local is_available = utils.is_available
+return function(maps)
+  local utils = require "astronvim.utils"
+  local is_available = utils.is_available
 
-local maps = { n = {} }
+  -- LSP Code Action
+  if maps.n["<leader>la"] then
+    maps.n[";a"] = maps.n["<leader>la"]
+    maps.n["<leader>la"] = false
+  end
 
-if is_available "inc-rename.nvim" then maps.n["<leader>lr"] = { ":IncRename ", desc = "Inc rename symbol" } end
+  -- Format buffer
+  if maps.n["<leader>lf"] then
+    maps.n[";f"] = maps.n["<leader>lf"]
+    maps.n["<leader>lf"] = false
+  end
 
-return maps
+  -- telescope diagonostic
+  if maps.n["<leader>lD"] then
+    maps.n["fd"] = maps.n["<leader>lD"]
+    maps.n["<leader>lD"] = false
+  end
+
+  -- LSP Default rename symbol 비활성화
+  if is_available "inc-rename.nvim" then maps.n["<leader>lr"] = false end
+
+  return maps
+end

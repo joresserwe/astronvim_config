@@ -9,8 +9,20 @@ return {
   --
   { import = "astrocommunity.bars-and-lines.lualine-nvim" },
 
+  { import = "astrocommunity.color.mini-hipatterns" },
+
+  { import = "astrocommunity.diagnostics.lsp_lines-nvim" },
+  -- { import = "astrocommunity.diagnostics.trouble-nvim" },
+
+  { import = "astrocommunity.editing-support.rainbow-delimiters-nvim" },
+  { import = "astrocommunity.editing-support.refactoring-nvim" },
+
   -- zoxide(가장 빈번히 방문한 디렉토리)를 telescope와 결합해서 사용할 수 있다.
   { import = "astrocommunity.fuzzy-finder.telescope-zoxide" },
+
+  -- Git
+  { import = "astrocommunity.git.neogit" },
+  { import = "astrocommunity.git.diffview-nvim" },
 
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.pack.java" },
@@ -22,12 +34,13 @@ return {
   { import = "astrocommunity.pack.yaml" },
   { import = "astrocommunity.pack.docker" },
   { import = "astrocommunity.pack.typescript" },
-  { import = "astrocommunity.pack.html-css" },
   -- { import = "astrocommunity.pack.helm" },
 
   { import = "astrocommunity.motion.nvim-surround" },
 
+  { import = "astrocommunity.utility.noice-nvim" },
+
   -- LSP garbage collection
   { import = "astrocommunity.lsp.garbage-day-nvim" },
-  { import = "astrocommunity.lsp.lsp-signature-nvim" },
+  -- { import = "astrocommunity.lsp.lsp-signature-nvim" },
 }
