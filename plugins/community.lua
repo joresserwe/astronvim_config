@@ -34,6 +34,7 @@ return {
   { import = "astrocommunity.pack.yaml" },
   { import = "astrocommunity.pack.docker" },
   { import = "astrocommunity.pack.typescript" },
+  { import = "astrocommunity.pack.markdown" },
   -- { import = "astrocommunity.pack.helm" },
 
   { import = "astrocommunity.motion.nvim-surround" },
