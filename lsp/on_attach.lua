@@ -9,4 +9,5 @@ return function(client, bufnr)
   -- vim.diagnostic.config {
   --   float = { border = border.default[vim.g.border] },
   -- }
+
 end

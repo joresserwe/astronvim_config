@@ -5,13 +5,17 @@ return function(maps)
   -- LSP Code Action
   if maps.n["<leader>la"] then
     maps.n[";a"] = maps.n["<leader>la"]
+    maps.v[";a"] = maps.v["<leader>la"]
     maps.n["<leader>la"] = false
+    maps.v["<leader>la"] = false
   end
 
   -- Format buffer
   if maps.n["<leader>lf"] then
     maps.n[";f"] = maps.n["<leader>lf"]
+    maps.v[";f"] = maps.v["<leader>lf"]
     maps.n["<leader>lf"] = false
+    maps.v["<leader>lf"] = false
   end
 
   -- telescope diagonostic

@@ -5,7 +5,7 @@ return {
   config = function()
     require("astronvim.utils").set_mappings {
       n = {
-        ["sm"] = {
+        ["sp"] = {
           "<cmd>MarkdownPreviewToggle<cr>",
           desc = "Toggle Markdown Preview",
         },

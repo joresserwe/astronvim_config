@@ -11,7 +11,7 @@ return {
 
   { import = "astrocommunity.color.mini-hipatterns" },
 
-  { import = "astrocommunity.diagnostics.lsp_lines-nvim" },
+  -- { import = "astrocommunity.diagnostics.lsp_lines-nvim" },
   -- { import = "astrocommunity.diagnostics.trouble-nvim" },
 
   { import = "astrocommunity.editing-support.rainbow-delimiters-nvim" },
@@ -33,7 +33,7 @@ return {
   { import = "astrocommunity.pack.python" },
   { import = "astrocommunity.pack.yaml" },
   { import = "astrocommunity.pack.docker" },
-  { import = "astrocommunity.pack.typescript" },
+  -- { import = "astrocommunity.pack.typescript" },
   { import = "astrocommunity.pack.markdown" },
   -- { import = "astrocommunity.pack.helm" },
 
