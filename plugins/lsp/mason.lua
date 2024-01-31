@@ -9,7 +9,7 @@ return {
       opts.ensure_installed = require("astronvim.utils").list_insert_unique(opts.ensure_installed, {
         "html",
         "cssls",
-        "emmet_language_server"
+        "emmet_language_server",
       })
     end,
   },
@@ -21,9 +21,18 @@ return {
       -- add more things to the ensure_installed table protecting against community packs modifying it
       opts.ensure_installed = require("astronvim.utils").list_insert_unique(opts.ensure_installed, {
         "stylua",
-        --"eslint_d",
         -- "prettier",
       })
+    -- opts.handlers = {
+    --     function() end, -- disables automatic setup of all null-ls sources
+    --     stylua = function(source_name, methods)
+    --       null_ls.register(null_ls.builtins.formatting.stylua)
+    --     end,
+    --     shfmt = function(source_name, methods)
+    --       -- custom logic
+    --       require('mason-null-ls').default_setup(source_name, methods) -- to maintain default behavior
+    --     end,
+    -- },
     end,
   },
   {

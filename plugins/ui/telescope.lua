@@ -10,7 +10,7 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     opts = function(_, config)
-      local utils = require "../../astronvim/utils"
+      local utils = require "astronvim.utils"
       local telescope = require "telescope"
       local action = require "telescope.actions"
       local fb_action = require "telescope._extensions.file_browser.actions"

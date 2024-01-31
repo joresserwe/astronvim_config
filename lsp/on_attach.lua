@@ -9,5 +9,6 @@ return function(client, bufnr)
   -- vim.diagnostic.config {
   --   float = { border = border.default[vim.g.border] },
   -- }
-
+  --
+  --client.server_capabilities.documentFormattingProvider = false
 end

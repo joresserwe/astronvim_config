@@ -1,19 +1,13 @@
 return {
-  on_attach = function()
-    require("astronvim.utils").set_mappings {
-      n = {
-        [";o"] = {
-          "<cmd>TypescriptRemoveUnused<cr>",
-          desc = "Remove Unused Imports",
-        },
-      },
-    }
+  on_attach = function(client, bufnr)
+    vim.lsp.buf.inlay_hint(bufnr, true)
   end,
   settings = {
+    -- specify some or all of the following settings if you want to adjust the default behavior
     javascript = {
       inlayHints = {
         includeInlayEnumMemberValueHints = true,
-        includeInlayFunctionLiketurnTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
         includeInlayFunctionParameterTypeHints = true,
         includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
         includeInlayParameterNameHintsWhenArgumentMatchesName = true,

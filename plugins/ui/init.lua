@@ -5,5 +5,4 @@ return {
   require(current_path .. "noice"),
   require(current_path .. "notify"),
   require(current_path .. "telescope"),
-  require(current_path .. "treesitter"),
 }
