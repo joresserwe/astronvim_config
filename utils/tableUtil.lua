@@ -16,4 +16,11 @@ M.tableToString = function(tbl, indent)
   return str
 end
 
+M.includes = function(tbl, element)
+  for _, value in pairs(tbl) do
+    if value == element then return true end
+  end
+  return false
+end
+
 return M
