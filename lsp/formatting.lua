@@ -15,9 +15,7 @@ return {
   },
   filter = function(client) -- fully override the default formatting function
     local formatter_filter = { "null-ls" }
-    local result = require("user.utils.tableUtil").includes(formatter_filter, client.name)
-    vim.notify(client.name .. " mapping => " .. tostring(result))
-    return result
+    return require("user.utils.tableUtil").includes(formatter_filter, client.name)
   end,
   --timeout_ms = 1000, -- default format timeout
 }

@@ -22,13 +22,11 @@ return {
           or util.root_has_file ".prettierrc.toml"
       end
 
-      local has_eslint_plugin_prettier = function(util) return end
-
       opts.handlers.prettierd = function()
         local null_ls = require "null-ls"
         null_ls.register(null_ls.builtins.formatting.prettierd.with {
           condition = has_prettier,
-          disabled_filetypes = { "json", "jsonc" },
+          disabled_filetypes = { "json", "jsonc", "javascript", "javascriptreact" },
         })
       end
     end,
