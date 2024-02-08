@@ -26,5 +26,8 @@ return function(maps)
 
   -- LSP Default rename symbol 비활성화
   if is_available "inc-rename.nvim" then maps.n["<leader>lr"] = false end
+
+  -- Disable mappings
+  maps.n["<leader>lR"] = false -- use 'gr'
   return maps
 end

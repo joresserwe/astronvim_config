@@ -6,16 +6,15 @@
 --
 -- TODO
 -- telescope-live-grep-args 확인
--- autosave시 null-ls 동작하게
--- markdown-and-latex 플러그인 확인
---
+
 local utils = require "astronvim.utils"
 local get_icon = utils.get_icon
 local is_available = utils.is_available
 local sections = {
   ["'"] = { desc = get_icon("Package", 1, true) .. "Packages" },
   [","] = { desc = get_icon("Debugger", 1, true) .. "Debugger" },
-  ["s"] = { desc = get_icon("Session", 1, true) .. "Session" },
+  ["ss"] = { desc = get_icon("Session", 1, true) .. "Session" },
+  ["s"] = { desc = get_icon("Session", 1, true) .. "Show" },
 }
 
 local maps = {
@@ -25,20 +24,23 @@ local maps = {
     ["x"] = { '"_x' },
     ["c"] = { '"_c' },
     ["y"] = { '"iy' },
+    ["Y"] = { "y" },
     ["d"] = { '"dd' },
     ["ps"] = { "p", desc = "paste from system clipboard" },
     ["pi"] = { '"ip', desc = "paste from inner clipboard ('k')" },
     ["pd"] = { '"dp', desc = "paste from deleted" },
   },
+
   n = {
     -- copy & paste
     ["<leader>c"] = { '"_ciw', desc = "단어 편집" },
     ["<leader>x"] = { "viwx", remap = true, desc = "단어 제거(clipboard x)" },
     ["<leader>d"] = { "viwd", remap = true, desc = "단어 제거(clipboard o)" },
-    ["<leader>pi"] = { 'viw"ip', desc = "paste from inner clipboard('i')" },
-    ["<leader>pd"] = { 'viw"dp', desc = "paste from deleted" },
-    ["<leader>ps"] = { "viwp", desc = "paste from deleted" },
+    ["<leader>pi"] = { 'viw"_x"iP', desc = "paste from inner clipboard('i')" },
+    ["<leader>pd"] = { 'viw"_x"dP', desc = "paste from deleted" },
+    ["<leader>ps"] = { 'viw"_xP', desc = "paste from system clipboard" },
     ["yy"] = { '"iyy' },
+    ["Yy"] = { "yy" },
     ["dd"] = { '"ddd' },
 
     ["<C-a>"] = { "gg<S-v>G" },
@@ -82,22 +84,8 @@ local maps = {
       desc = "Toggle Explorer Focus",
     },
 
-    -- Plugin Manager (<leader>p => <leader>')
-    ["<leader>'"] = sections["'"],
-    ["<leader>'i"] = { function() require("lazy").install() end, desc = "Plugins Install" },
-    ["<leader>'s"] = { function() require("lazy").home() end, desc = "Plugins Status" },
-    ["<leader>'S"] = { function() require("lazy").sync() end, desc = "Plugins Sync" },
-    ["<leader>'u"] = { function() require("lazy").check() end, desc = "Plugins Check Updates" },
-    ["<leader>'U"] = { function() require("lazy").update() end, desc = "Plugins Update" },
-
-    -- AstroNvim (<leader>p => <leader>')
-    ["<leader>'a"] = { "<cmd>AstroUpdatePackages<cr>", desc = "Update Plugins and Mason Packages" },
-    ["<leader>'A"] = { "<cmd>AstroUpdate<cr>", desc = "AstroNvim Update" },
-    ["<leader>'v"] = { "<cmd>AstroVersion<cr>", desc = "AstroNvim Version" },
-    ["<leader>'l"] = { "<cmd>AstroChangelog<cr>", desc = "AstroNvim Changelog" },
-
     -- surround
-    ["<leader>y"] = { "ysiw", remap = false, desc = "Surround word" },
+    ["<leader>y"] = { "ysiw", remap = true, desc = "Surround word" },
   },
   x = {
     -- visual
@@ -118,6 +106,8 @@ local maps = {
 
 -- Telescope
 if is_available "telescope.nvim" then
+  maps.n["<leader>f`"] = { function() require("telescope.builtin").marks() end, desc = "Find marks" }
+  maps.n["<leader>f'"] = { function() require("telescope.builtin").registers() end, desc = "Find registers" }
   maps.n["<leader>f/"] = { function() require("telescope.builtin").live_grep() end, desc = "Find words" }
   maps.n["<leader>f?"] = {
     function()
@@ -132,8 +122,10 @@ if is_available "telescope.nvim" then
     desc = "Find history in CWD",
   }
   maps.n["<leader>fE"] = { function() require("telescope.builtin").oldfiles {} end, desc = "Find history All Path" }
-  maps.n["<leader>fz"] = { function() require("telescope").extensions.zoxide.list() end, desc = "Find directories" }
-
+  if is_available "telescope-import.nvim" then
+    maps.n["<leader>fi"] =
+      { function() require("telescope").extensions.import.import {} end, desc = "Open import Browser" }
+  end
   maps.n["<leader>fs"] = {
     function()
       local aerial_avail, _ = pcall(require, "aerial")
@@ -145,20 +137,12 @@ if is_available "telescope.nvim" then
     end,
     desc = "Search symbols",
   }
-
-  if is_available "telescope-file-browser.nvim" then
-    maps.n["sf"] =
-      { function() require("telescope").extensions.file_browser.file_browser {} end, desc = "Open File Browser" }
-  end
-  if is_available "telescope-import.nvim" then
-    maps.n["<leader>fi"] =
-      { function() require("telescope").extensions.import.import {} end, desc = "Open import Browser" }
-  end
+  maps.n["<leader>fz"] = { function() require("telescope").extensions.zoxide.list() end, desc = "Find directories" }
 end
 
 -- Session Manager (<leader>S => <leader>s)
 if is_available "neovim-session-manager" then
-  maps.n["<leader>s"] = sections.s
+  maps.n["<leader>s"] = sections.ss
   maps.n["<leader>sl"] = { "<cmd>SessionManager! load_last_session<cr>", desc = "Load last session" }
   maps.n["<leader>ss"] = { "<cmd>SessionManager! save_current_session<cr>", desc = "Save this session" }
   maps.n["<leader>sd"] = { "<cmd>SessionManager! delete_session<cr>", desc = "Delete session" }
@@ -168,7 +152,7 @@ if is_available "neovim-session-manager" then
 end
 
 if is_available "resession.nvim" then
-  maps.n["<leader>s"] = sections.s
+  maps.n["<leader>s"] = sections.ss
   maps.n["<leader>sl"] = { function() require("resession").load "Last Session" end, desc = "Load last session" }
   maps.n["<leader>ss"] = { function() require("resession").save() end, desc = "Save this session" }
   maps.n["<leader>st"] = { function() require("resession").save_tab() end, desc = "Save this tab's session" }
@@ -187,18 +171,23 @@ if is_available "multicursors.nvim" then
   maps.x["mm"] = { function() require("multicursors").search_visual() end, desc = "multicursor search" }
 end
 
--- Package Manager (<leader>p => <leader>')
+-- Plugin/AstroNvim/Package Manager (<leader>p => <leader>')
+maps.n["<leader>'"] = sections["'"]
+maps.n["<leader>'i"] = { function() require("lazy").install() end, desc = "Plugins Install" }
+maps.n["<leader>'s"] = { function() require("lazy").home() end, desc = "Plugins Status" }
+maps.n["<leader>'S"] = { function() require("lazy").sync() end, desc = "Plugins Sync" }
+maps.n["<leader>'u"] = { function() require("lazy").check() end, desc = "Plugins Check Updates" }
+maps.n["<leader>'U"] = { function() require("lazy").update() end, desc = "Plugins Update" }
+maps.n["<leader>'a"] = { "<cmd>AstroUpdatePackages<cr>", desc = "Update Plugins and Mason Packages" }
+maps.n["<leader>'A"] = { "<cmd>AstroUpdate<cr>", desc = "AstroNvim Update" }
+maps.n["<leader>'v"] = { "<cmd>AstroVersion<cr>", desc = "AstroNvim Version" }
+maps.n["<leader>'l"] = { "<cmd>AstroChangelog<cr>", desc = "AstroNvim Changelog" }
 if is_available "mason.nvim" then
   maps.n["<leader>'m"] = { "<cmd>Mason<cr>", desc = "Mason Installer" }
   maps.n["<leader>'M"] = { "<cmd>MasonUpdateAll<cr>", desc = "Mason Update" }
 end
 
--- AutoSave
--- if is_available "auto-save.nvim" then
---   maps.n["<leader>uA"] = { "<cmd>ASToggle<cr>", desc = "Toggle Autosave" }
--- end
-
--- Debugger (<leader>d => <leader>.d)
+-- Debugger (<leader>d => <leader>,)
 if is_available "nvim-dap" then
   maps.n["<leader>,"] = sections[","]
   maps.x["<leader>,"] = sections[","]
@@ -238,62 +227,79 @@ if is_available "nvim-dap" then
   end
 end
 
--- ###############Disabled Keys################
-maps.n["p"] = false
-maps.n["P"] = false
-maps.n["Y"] = false
-maps.n["s"] = false
+maps.n["s"] = sections.s
+if is_available "telescope-file-browser.nvim" then
+  maps.n["sf"] =
+    { function() require("telescope").extensions.file_browser.file_browser {} end, desc = "Open File Browser" }
+  if is_available "aerial.nvim" then
+    maps.n["sh"] = { function() require("aerial").toggle() end, desc = "Symbols outline(Hierarchy)" }
+  end
+end
+
+if is_available "neovim-session-manager" then
+  maps.n["<leader>sl"] = { "<cmd>SessionManager! load_last_session<cr>", desc = "Load last session" }
+  maps.n["<leader>ss"] = { "<cmd>SessionManager! save_current_session<cr>", desc = "Save this session" }
+  maps.n["<leader>sd"] = { "<cmd>SessionManager! delete_session<cr>", desc = "Delete session" }
+  maps.n["<leader>sf"] = { "<cmd>SessionManager! load_session<cr>", desc = "Search sessions" }
+  maps.n["<leader>s."] =
+    { "<cmd>SessionManager! load_current_dir_session<cr>", desc = "Load current directory session" }
+end
+
+-- terminal
+if is_available "toggleterm.nvim" then
+  maps.n["<leader>t-"] = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", desc = "ToggleTerm horizontal split" }
+  maps.n["<leader>t\\"] = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", desc = "ToggleTerm vertical split" }
+end
+
+-- AutoSave
+if is_available "auto-save.nvim" then maps.n["<leader>uA"] = { "<cmd>ASToggle<cr>", desc = "Toggle Autosave" } end
+
+-- disable key
 maps.n["|"] = false
 maps.n["\\"] = false
-maps.n["]t"] = false
-maps.n["[t"] = false
-
-maps.n["<leader>h"] = false
-
-maps.n["<leader>pm"] = false
-maps.n["<leader>pM"] = false
-maps.n["<leader>pi"] = false
-maps.n["<leader>ps"] = false
-maps.n["<leader>pS"] = false
-maps.n["<leader>pu"] = false
-maps.n["<leader>pU"] = false
-maps.n["<leader>pa"] = false
-maps.n["<leader>pA"] = false
-maps.n["<leader>pv"] = false
-maps.n["<leader>pl"] = false
-
+maps.n["<leader>C"] = false
 maps.n["<leader>S"] = false
-maps.n["<leader>Sl"] = false
-maps.n["<leader>Ss"] = false
+maps.n["<leader>S."] = false
 maps.n["<leader>Sd"] = false
 maps.n["<leader>Sf"] = false
-maps.n["<leader>St"] = false
 maps.n["<leader>Sf"] = false
-maps.n["<leader>S."] = false
-
-maps.n["<leader>C"] = false
-
-maps.n["<leader>fo"] = false
-maps.n["<leader>fw"] = false
-maps.n["<leader>fW"] = false
-
-maps.n["<leader>db"] = false
+maps.n["<leader>Sl"] = false
+maps.n["<leader>Ss"] = false
+maps.n["<leader>St"] = false
 maps.n["<leader>dB"] = false
-maps.n["<leader>dc"] = false
 maps.n["<leader>dC"] = false
 maps.n["<leader>dE"] = false
+maps.n["<leader>dO"] = false
+maps.n["<leader>dQ"] = false
+maps.n["<leader>dR"] = false
+maps.n["<leader>db"] = false
+maps.n["<leader>dc"] = false
 maps.n["<leader>dh"] = false
 maps.n["<leader>di"] = false
 maps.n["<leader>do"] = false
-maps.n["<leader>dO"] = false
-maps.n["<leader>dq"] = false
-maps.n["<leader>dQ"] = false
 maps.n["<leader>dp"] = false
+maps.n["<leader>dq"] = false
 maps.n["<leader>dr"] = false
-maps.n["<leader>dR"] = false
 maps.n["<leader>ds"] = false
 maps.n["<leader>du"] = false
-
+maps.n["<leader>fW"] = false
+maps.n["<leader>fo"] = false
+maps.n["<leader>fr"] = false
+maps.n["<leader>fw"] = false
+maps.n["<leader>h"] = false
+maps.n["<leader>lS"] = false
 maps.n["<leader>ls"] = false
--- ##########################################
+maps.n["<leader>pA"] = false
+maps.n["<leader>pM"] = false
+maps.n["<leader>pS"] = false
+maps.n["<leader>pU"] = false
+maps.n["<leader>pa"] = false
+maps.n["<leader>pl"] = false
+maps.n["<leader>pm"] = false
+maps.n["<leader>pu"] = false
+maps.n["<leader>pv"] = false
+maps.n["<leader>th"] = false
+maps.n["<leader>tl"] = false
+maps.n["<leader>tv"] = false
+
 return maps
