@@ -22,18 +22,25 @@ local maps = {
   [""] = {
     ["("] = { "10k" },
     [")"] = { "10j" },
-    ["y"] = { '"ky', desc = "copy to inner clipboard" },
-    ["Y"] = { "y", desc = "copy to system clipboard" },
-    ["p"] = { '"kp', desc = "paste from inner clipboard ('k')" },
-    ["P"] = { "p", desc = "paste from system clipboard" },
+    ["x"] = { '"_x' },
+    ["c"] = { '"_c' },
+    ["y"] = { '"iy' },
+    ["d"] = { '"dd' },
+    ["ps"] = { "p", desc = "paste from system clipboard" },
+    ["pi"] = { '"ip', desc = "paste from inner clipboard ('k')" },
+    ["pd"] = { '"dp', desc = "paste from deleted" },
   },
   n = {
-    ["<leader>c"] = { "ciw", desc = "단어 편집" },
-    ["<leader>x"] = { "viwx", desc = "단어 제거(clipboard x)" },
-    ["<leader>d"] = { "viwd", desc = "단어 제거(clipboard o)" },
-    ["<leader>p"] = { 'viw"kP', desc = "paste from inner clipboard('k')" },
-    ["<leader>P"] = { "viwP", desc = "paste from system clipboard" },
-    ["yy"] = { '"kyy' },
+    -- copy & paste
+    ["<leader>c"] = { '"_ciw', desc = "단어 편집" },
+    ["<leader>x"] = { "viwx", remap = true, desc = "단어 제거(clipboard x)" },
+    ["<leader>d"] = { "viwd", remap = true, desc = "단어 제거(clipboard o)" },
+    ["<leader>pi"] = { 'viw"ip', desc = "paste from inner clipboard('i')" },
+    ["<leader>pd"] = { 'viw"dp', desc = "paste from deleted" },
+    ["<leader>ps"] = { "viwp", desc = "paste from deleted" },
+    ["yy"] = { '"iyy' },
+    ["dd"] = { '"ddd' },
+
     ["<C-a>"] = { "gg<S-v>G" },
 
     ["<S-h>"] = { "h", desc = "오타 방지" },
@@ -232,6 +239,9 @@ if is_available "nvim-dap" then
 end
 
 -- ###############Disabled Keys################
+maps.n["p"] = false
+maps.n["P"] = false
+maps.n["Y"] = false
 maps.n["s"] = false
 maps.n["|"] = false
 maps.n["\\"] = false
