@@ -24,16 +24,6 @@ return {
   { import = "astrocommunity.git.neogit" },
   { import = "astrocommunity.git.diffview-nvim" },
 
-  { import = "astrocommunity.pack.java" },
-  { import = "astrocommunity.pack.yaml" },
-  { import = "astrocommunity.pack.go" },
-  { import = "astrocommunity.pack.kotlin" },
-  { import = "astrocommunity.pack.python" },
-  { import = "astrocommunity.pack.yaml" },
-  { import = "astrocommunity.pack.docker" },
-  { import = "astrocommunity.pack.markdown" },
-  -- { import = "astrocommunity.pack.helm" },
-
   { import = "astrocommunity.motion.nvim-surround" },
 
   { import = "astrocommunity.utility.noice-nvim" },

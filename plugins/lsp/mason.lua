@@ -1,3 +1,5 @@
+local null_ls = require "null-ls"
+
 -- customize mason plugins
 return {
   -- use mason-lspconfig to configure LSP installations
@@ -10,6 +12,12 @@ return {
         "html",
         "cssls",
         "emmet_language_server",
+        "jsonls",
+        "lua_ls",
+        "tsserver",
+        "eslint",
+        "marksman",
+        "yamlls",
       })
     end,
   },
@@ -21,18 +29,10 @@ return {
       -- add more things to the ensure_installed table protecting against community packs modifying it
       opts.ensure_installed = require("astronvim.utils").list_insert_unique(opts.ensure_installed, {
         "stylua",
-        -- "prettier",
+        "eslint_d",
       })
-    -- opts.handlers = {
-    --     function() end, -- disables automatic setup of all null-ls sources
-    --     stylua = function(source_name, methods)
-    --       null_ls.register(null_ls.builtins.formatting.stylua)
-    --     end,
-    --     shfmt = function(source_name, methods)
-    --       -- custom logic
-    --       require('mason-null-ls').default_setup(source_name, methods) -- to maintain default behavior
-    --     end,
-    -- },
+
+      opts.handlers.eslint_d = function() null_ls.register(null_ls.builtins.formatting.eslint_d) end
     end,
   },
   {
@@ -41,7 +41,7 @@ return {
     opts = function(_, opts)
       -- add more things to the ensure_installed table protecting against community packs modifying it
       opts.ensure_installed = require("astronvim.utils").list_insert_unique(opts.ensure_installed, {
-        -- "python",
+        "js",
       })
     end,
   },

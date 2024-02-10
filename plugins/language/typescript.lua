@@ -16,36 +16,11 @@ local function on_file_remove(args)
 end
 
 return {
-  { import = "astrocommunity.pack.json" },
   {
-    "nvim-treesitter/nvim-treesitter",
+    "jose-elias-alvarez/null-ls.nvim",
     opts = function(_, opts)
-      if opts.ensure_installed ~= "all" then
-        opts.ensure_installed =
-          utils.list_insert_unique(opts.ensure_installed, { "javascript", "typescript", "tsx", "jsdoc" })
-      end
+      opts.sources = utils.list_insert_unique(opts.sources, require "typescript.extensions.null-ls.code-actions")
     end,
-  },
-  {
-    "williamboman/mason-lspconfig.nvim",
-    opts = function(_, opts)
-      opts.ensure_installed = utils.list_insert_unique(opts.ensure_installed, { "tsserver", "eslint" })
-    end,
-  },
-  {
-    "jay-babu/mason-null-ls.nvim",
-    opts = function(_, opts)
-      opts.ensure_installed = utils.list_insert_unique(opts.ensure_installed, { "eslint_d" })
-      if not opts.handlers then opts.handlers = {} end
-      opts.handlers.eslint_d = function()
-        local null_ls = require "null-ls"
-        null_ls.register(null_ls.builtins.formatting.eslint_d)
-      end
-    end,
-  },
-  {
-    "jay-babu/mason-nvim-dap.nvim",
-    opts = function(_, opts) opts.ensure_installed = utils.list_insert_unique(opts.ensure_installed, "js") end,
   },
   {
     "vuki656/package-info.nvim",
@@ -65,12 +40,6 @@ return {
     opts = function() return { server = require("astronvim.utils.lsp").config "tsserver" } end,
   },
   {
-    "jose-elias-alvarez/null-ls.nvim",
-    opts = function(_, opts)
-      opts.sources = utils.list_insert_unique(opts.sources, require "typescript.extensions.null-ls.code-actions")
-    end,
-  },
-  {
     "nvim-neo-tree/neo-tree.nvim",
     opts = function(_, opts)
       local events = require "neo-tree.events"
@@ -85,6 +54,48 @@ return {
     "dmmulroy/tsc.nvim",
     cmd = { "TSC" },
     opts = {},
+  },
+  {
+    "mfussenegger/nvim-dap",
+    optional = true,
+    config = function()
+      local dap = require "dap"
+      dap.adapters["pwa-node"] = {
+        type = "server",
+        host = "localhost",
+        port = "${port}",
+        executable = {
+          command = "node",
+          args = {
+            require("mason-registry").get_package("js-debug-adapter"):get_install_path()
+              .. "/js-debug/src/dapDebugServer.js",
+            "${port}",
+          },
+        },
+      }
+      local js_config = {
+        {
+          type = "pwa-node",
+          request = "launch",
+          name = "Launch file",
+          program = "${file}",
+          cwd = "${workspaceFolder}",
+        },
+        {
+          type = "pwa-node",
+          request = "attach",
+          name = "Attach",
+          processId = require("dap.utils").pick_process,
+          cwd = "${workspaceFolder}",
+        },
+      }
+
+      if not dap.configurations.javascript then
+        dap.configurations.javascript = js_config
+      else
+        utils.extend_tbl(dap.configurations.javascript, js_config)
+      end
+    end,
   },
   -- {
   --   "kristijanhusak/vim-js-file-import",
