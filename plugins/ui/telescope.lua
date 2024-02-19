@@ -36,6 +36,7 @@ return {
             respect_gitignore = false,
             hidden = true,
             grouped = true,
+            follow_symlinks = true,
             previewer = false,
             initial_mode = "normal",
             layout_config = { height = 20 },
