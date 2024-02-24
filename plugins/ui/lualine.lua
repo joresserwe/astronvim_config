@@ -1,4 +1,5 @@
 local colors = {
+  none = "none",
   blue = "#80a0ff",
   cyan = "#79dac8",
   black = "#080808",
@@ -12,7 +13,7 @@ local bubbles_theme = {
   normal = {
     a = { fg = colors.black, bg = colors.violet },
     b = { fg = colors.white, bg = colors.grey },
-    c = { fg = colors.black, bg = colors.black },
+    c = { fg = colors.none, bg = colors.none },
   },
 
   insert = { a = { fg = colors.black, bg = colors.blue } },
@@ -55,11 +56,11 @@ return {
         lualine_b = { { "filename", path = 1 }, "branch", { get_name, cond = is_active } },
         -- lualine_c = { 'fileformat' },
         lualine_c = {
-          {
-            "filename",
-            file_status = true, -- displays file status (readonly status, modified status)
-            path = 0, -- 0 = just filename, 1 = relative path, 2 = absolute path
-          },
+          -- {
+          --   "filename",
+          --   file_status = true, -- displays file status (readonly status, modified status)
+          --   path = 0, -- 0 = just filename, 1 = relative path, 2 = absolute path
+          -- },
         },
         lualine_x = {
           {
@@ -78,11 +79,11 @@ return {
         lualine_a = {},
         lualine_b = {},
         lualine_c = {
-          {
-            "filename",
-            file_status = true, -- displays file status (readonly status, modified status)
-            path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
-          },
+          -- {
+          --   "filename",
+          --   file_status = true, -- displays file status (readonly status, modified status)
+          --   path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
+          -- },
         },
         lualine_x = { "location" },
         lualine_y = {},
