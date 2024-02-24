@@ -1,6 +1,6 @@
 return function() -- this table overrides highlights in all themes
   local colors = require "user.highlights.colors"
-  local highlight_util = require "user.plugins.utils.highlight"
+  local highlight_util = require "user.utils.highlight"
   local get_hlgroup = require("astronvim.utils").get_hlgroup
 
   local tab = {
@@ -20,17 +20,17 @@ return function() -- this table overrides highlights in all themes
     },
   }
 
-  local winbarHL = {
-    WinBar = { fg = colors.corn_flower_blue, bg = colors.none },
-    WinBarNC = { fg = colors.light_steel_blue, bg = colors.none },
+  local winbar_hl = {
+    WinBar = { bg = colors.none },
+    WinBarNC = { fg = colors.inactive_fg, bg = colors.none },
   }
 
-  local neoTreeHL = {
+  local neoTree_hl = {
     NeoTreeNormal = { bg = colors.none },
     NeoTreeNormalNC = { bg = colors.none },
   }
 
-  local bufferLineHL = {
+  local bufferLine_hl = {
     BufferLineDuplicate = { fg = tab.inactive.fg, bg = tab.inactive.bg },
     BufferLineDuplicateSelected = { bg = tab.active.bg, bold = true, italic = true },
     BufferLineDuplicateVisible = { fg = tab.unfocused.fg, bg = tab.unfocused.bg },
@@ -72,11 +72,11 @@ return function() -- this table overrides highlights in all themes
 
   for _, icon in pairs(require("nvim-web-devicons").get_icons()) do
     if not icon.name then goto continue end
-    bufferLineHL["BufferLineDevIcon" .. icon.name] = { fg = tab.inactive.fg, bg = tab.inactive.bg }
-    bufferLineHL["BufferLineDevIcon" .. icon.name .. "Selected"] = { bg = tab.active.bg }
-    bufferLineHL["BufferLineDevIcon" .. icon.name .. "Inactive"] = { bg = tab.unfocused.bg }
+    bufferLine_hl["BufferLineDevIcon" .. icon.name] = { fg = tab.inactive.fg, bg = tab.inactive.bg }
+    bufferLine_hl["BufferLineDevIcon" .. icon.name .. "Selected"] = { bg = tab.active.bg }
+    bufferLine_hl["BufferLineDevIcon" .. icon.name .. "Inactive"] = { bg = tab.unfocused.bg }
     ::continue::
   end
 
-  return vim.tbl_extend("force", winbarHL, neoTreeHL, bufferLineHL)
+  return vim.tbl_extend("force", winbar_hl, neoTree_hl, bufferLine_hl)
 end
