@@ -15,7 +15,7 @@ return {
   },
   filter = function(client) -- fully override the default formatting function
     local formatter_filter = { "null-ls" }
-    return require("user.utils.tableUtil").includes(formatter_filter, client.name)
+    return vim.tbl_contains(formatter_filter, client.name)
   end,
   --timeout_ms = 1000, -- default format timeout
 }
