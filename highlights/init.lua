@@ -3,7 +3,7 @@ return function() -- this table overrides highlights in all themes
   local highlight_util = require "user.utils.highlight"
   local get_hlgroup = require("astronvim.utils").get_hlgroup
 
-  local tab = {
+  local tab_color = {
     active = {
       bg = colors.none,
       indicator = colors.lime,
@@ -13,16 +13,20 @@ return function() -- this table overrides highlights in all themes
       bg = colors.none,
     },
     unfocused = {
-      -- fg = colors.unfocus_fg,
-      fg = highlight_util.blend(colors.unfocus_fg, 0.7, colors.inactive_fg),
+      fg = highlight_util.blend(colors.unfocus_fg, 0.5, colors.inactive_fg),
       bg = colors.none,
       indicator = colors.dark_golden_rod,
     },
   }
 
+  local default_color = {
+    -- NormalNC = { bg = "#252635" },
+    NormalNC = { bg = colors.none },
+  }
+
   local winbar_hl = {
-    WinBar = { bg = colors.none },
-    WinBarNC = { fg = colors.inactive_fg, bg = colors.none },
+    WinBar = { fg = colors.corn_flower_blue, bg = colors.none },
+    WinBarNC = { fg = colors.inactive_fg, bg = default_color.NormalNC.bg },
   }
 
   local neoTree_hl = {
@@ -31,34 +35,34 @@ return function() -- this table overrides highlights in all themes
   }
 
   local bufferLine_hl = {
-    BufferLineDuplicate = { fg = tab.inactive.fg, bg = tab.inactive.bg },
-    BufferLineDuplicateSelected = { bg = tab.active.bg, bold = true, italic = true },
-    BufferLineDuplicateVisible = { fg = tab.unfocused.fg, bg = tab.unfocused.bg },
+    BufferLineDuplicate = { fg = tab_color.inactive.fg, bg = tab_color.inactive.bg },
+    BufferLineDuplicateSelected = { bg = tab_color.active.bg, bold = true, italic = true },
+    BufferLineDuplicateVisible = { fg = tab_color.unfocused.fg, bg = tab_color.unfocused.bg },
 
-    BufferLineBackground = { fg = tab.inactive.fg, bg = tab.inactive.bg },
-    BufferLineBufferSelected = { bg = tab.active.bg },
-    BufferLineBufferVisible = { fg = tab.unfocused.fg, bg = tab.unfocused.bg },
+    BufferLineBackground = { fg = tab_color.inactive.fg, bg = tab_color.inactive.bg },
+    BufferLineBufferSelected = { bg = tab_color.active.bg },
+    BufferLineBufferVisible = { fg = tab_color.unfocused.fg, bg = tab_color.unfocused.bg },
 
     BufferLineSeperator = { fg = colors.bg, bg = colors.none },
-    BufferLineSeperatorSelected = { fg = colors.none, bg = tab.active.indicator },
+    BufferLineSeperatorSelected = { fg = colors.none, bg = tab_color.active.indicator },
     BufferLineSeperatorVisible = { fg = colors.bg, bg = colors.none },
 
-    BufferLineIndicatorSelected = { fg = tab.active.indicator, bg = tab.active.bg },
-    BufferLineIndicatorVisible = { fg = tab.unfocused.indicator, bg = tab.unfocused.bg },
+    BufferLineIndicatorSelected = { fg = tab_color.active.indicator, bg = tab_color.active.bg },
+    BufferLineIndicatorVisible = { fg = tab_color.unfocused.indicator, bg = tab_color.unfocused.bg },
 
-    BufferLineModified = { bg = tab.inactive.bg },
-    BufferLineModifiedSelected = { bg = tab.active.bg },
-    BufferLineModifiedVisible = { bg = tab.unfocused.bg },
+    BufferLineModified = { bg = tab_color.inactive.bg },
+    BufferLineModifiedSelected = { bg = tab_color.active.bg },
+    BufferLineModifiedVisible = { bg = tab_color.unfocused.bg },
 
     BufferlineDiagnnosticVisible = { fg = colors.red },
 
-    BufferlineHintVisible = { fg = tab.unfocused.fg },
+    BufferlineHintVisible = { fg = tab_color.unfocused.fg },
     -- BufferlineHintDiagnosticVisible = { fg = tab.unfocused.fg },
-    BufferlineInfoVisible = { fg = tab.unfocused.fg },
+    BufferlineInfoVisible = { fg = tab_color.unfocused.fg },
     -- BufferlineInfoDiagnosticVisible = { fg = tab.unfocused.fg },
-    BufferlineWarningVisible = { fg = tab.unfocused.fg },
+    BufferlineWarningVisible = { fg = tab_color.unfocused.fg },
     -- BufferlineWarningDiagnosticVisible = { fg = tab.unfocused.fg },
-    BufferlineErrorVisible = { fg = tab.unfocused.fg },
+    BufferlineErrorVisible = { fg = tab_color.unfocused.fg },
     -- BufferlineErrorDiagnosticVisible = { fg = tab.unfocused.fg },
     -- BufferlineHintVisible = { fg = get_hlgroup("DiagnosticHint").fg },
     -- BufferlineHintDiagnosticVisible = { fg = get_hlgroup("DiagnosticHint").fg },
@@ -72,11 +76,11 @@ return function() -- this table overrides highlights in all themes
 
   for _, icon in pairs(require("nvim-web-devicons").get_icons()) do
     if not icon.name then goto continue end
-    bufferLine_hl["BufferLineDevIcon" .. icon.name] = { fg = tab.inactive.fg, bg = tab.inactive.bg }
-    bufferLine_hl["BufferLineDevIcon" .. icon.name .. "Selected"] = { bg = tab.active.bg }
-    bufferLine_hl["BufferLineDevIcon" .. icon.name .. "Inactive"] = { bg = tab.unfocused.bg }
+    bufferLine_hl["BufferLineDevIcon" .. icon.name] = { fg = tab_color.inactive.fg, bg = tab_color.inactive.bg }
+    bufferLine_hl["BufferLineDevIcon" .. icon.name .. "Selected"] = { bg = tab_color.active.bg }
+    bufferLine_hl["BufferLineDevIcon" .. icon.name .. "Inactive"] = { bg = tab_color.unfocused.bg }
     ::continue::
   end
 
-  return vim.tbl_extend("force", winbar_hl, neoTree_hl, bufferLine_hl)
+  return vim.tbl_extend("force", default_color, winbar_hl, neoTree_hl, bufferLine_hl)
 end
