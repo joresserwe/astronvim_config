@@ -6,5 +6,6 @@ return {
   require(current_path .. "neo-tree"),
   require(current_path .. "noice"),
   require(current_path .. "notify"),
+  require(current_path .. "rainbow-delimiters"),
   require(current_path .. "telescope"),
 }

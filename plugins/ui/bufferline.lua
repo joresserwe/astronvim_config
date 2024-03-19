@@ -1,7 +1,7 @@
 local a = 0
 return {
   {
-    "akinsho/bufferline.nvim",
+    "joresserwe/bufferline.nvim",
     event = "VeryLazy",
     opts = {
       options = {
@@ -29,7 +29,8 @@ return {
         indicator = {
           style = "icon", --'icon' | 'underline' | 'none',
           icon = "",
-          visible_icon = " ", -- ,
+          -- visible_icon = "",
+          visible_icon = "",
         },
         show_buffer_close_icons = false,
         show_close_icon = false,
@@ -37,9 +38,7 @@ return {
         persist_buffer_sort = true, -- whether or not custom sorted buffers should persist
         move_wraps_at_ends = false, -- whether or not the move command "wraps" at the first or last position
         -- nvim
-        custom_filter = function(bufnum, buf_nums)
-          return vim.tbl_contains(vim.t.bufs, bufnum)
-        end,
+        custom_filter = function(bufnum, buf_nums) return vim.tbl_contains(vim.t.bufs, bufnum) end,
       },
     },
   },

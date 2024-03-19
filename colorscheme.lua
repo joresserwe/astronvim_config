@@ -1,4 +1,4 @@
 -- return "solarized-osaka"
---return "catppuccin"
+-- -- return "catppuccin"
 return "tokyonight"
---return "midnight"
+-- return "midnight"

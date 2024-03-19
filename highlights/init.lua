@@ -15,7 +15,7 @@ return function() -- this table overrides highlights in all themes
     unfocused = {
       fg = highlight_util.blend(colors.unfocus_fg, 0.5, colors.inactive_fg),
       bg = colors.none,
-      indicator = colors.dark_golden_rod,
+      indicator = colors.crimson,
     },
   }
 

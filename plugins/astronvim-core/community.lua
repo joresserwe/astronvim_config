@@ -11,7 +11,6 @@ return {
   -- { import = "astrocommunity.diagnostics.lsp_lines-nvim" },
   -- { import = "astrocommunity.diagnostics.trouble-nvim" },
 
-  { import = "astrocommunity.editing-support.rainbow-delimiters-nvim" },
   { import = "astrocommunity.editing-support.refactoring-nvim" },
 
   -- zoxide(가장 빈번히 방문한 디렉토리)를 telescope와 결합해서 사용할 수 있다.
