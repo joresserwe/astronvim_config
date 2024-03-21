@@ -138,6 +138,9 @@ if is_available "telescope.nvim" then
     desc = "Search symbols",
   }
   maps.n["<leader>fz"] = { function() require("telescope").extensions.zoxide.list() end, desc = "Find directories" }
+  if is_available "telescope-file-browser.nvim" then
+    maps.n["<leader>fu"] = { function() require("telescope").extensions.undo.undo {} end, desc = "Find Undo" }
+  end
 end
 
 -- Session Manager (<leader>S => <leader>s)
@@ -229,11 +232,14 @@ end
 
 maps.n["s"] = sections.s
 if is_available "telescope-file-browser.nvim" then
+  maps.n["su"] = { function() require("telescope").extensions.undo.undo {} end, desc = "Find Undo" }
+end
+if is_available "telescope-file-browser.nvim" then
   maps.n["sf"] =
     { function() require("telescope").extensions.file_browser.file_browser {} end, desc = "Open File Browser" }
-  if is_available "aerial.nvim" then
-    maps.n["sh"] = { function() require("aerial").toggle() end, desc = "Symbols outline(Hierarchy)" }
-  end
+end
+if is_available "aerial.nvim" then
+  maps.n["sh"] = { function() require("aerial").toggle() end, desc = "Symbols outline(Hierarchy)" }
 end
 
 if is_available "neovim-session-manager" then

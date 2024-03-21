@@ -4,6 +4,10 @@ return {
     dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
   },
   {
+    "debugloop/telescope-undo.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+  },
+  {
     "piersolenski/telescope-import.nvim",
     dependencies = "nvim-telescope/telescope.nvim",
   },
@@ -73,6 +77,7 @@ return {
 
       utils.conditional_func(telescope.load_extension, pcall(require, "import"), "import")
       utils.conditional_func(telescope.load_extension, pcall(require, "file_browser"), "file_browser")
+      utils.conditional_func(telescope.load_extension, pcall(require, "undo"), "undo")
       return utils.extend_tbl(config, opts)
     end,
   },
