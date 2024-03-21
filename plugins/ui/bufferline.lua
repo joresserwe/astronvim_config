@@ -14,6 +14,10 @@ return {
             -- highlight = "Directory",
           },
         },
+        name_formatter = function(buf)
+          local zoom = buf.bufnr == vim.api.nvim_get_current_buf() and vim.fn["zoom#statusline"]() or ""
+          return buf.name .. zoom
+        end,
         -- style_preset = require("bufferline.style_preset.default, -- or bufferline.style_preset.minimal,
         diagnostics = "nvim_lsp", -- false | "nvim_lsp" | "coc",
         diagnostics_indicator = function(_, level, diagnostics_dict, context)
