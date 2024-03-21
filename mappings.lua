@@ -55,7 +55,8 @@ local maps = {
     -- Split
     ["<leader>\\"] = { "<C-w>v", desc = "세로 분할" },
     ["<leader>-"] = { "<C-w>s", desc = "가로 분할" },
-    ["<leader>m"] = { "<C-w>x", desc = "분할창 순서 변경" },
+    ["<leader>="] = { "<C-w>x", desc = "분할창 순서 변경" },
+    ["<leader>m"] = { function() vim.fn['zoom#toggle']() end, desc = "Zoom Pane" },
     ["<C-=>"] = { "<C-w>>" },
     ["<C-9>"] = { "<C-w><" },
     ["<C-_>"] = { "<C-w>-" },

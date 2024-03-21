@@ -51,9 +51,14 @@ return {
       },
       sections = {
         lualine_a = {
-          { "mode", separator = { left = "" }, right_padding = 2 },
+          { "mode", separator = { left = "" } },
+          { "vim.fn['zoom#statusline']()", separator = { right = "" }, padding = { right = 1 } },
         },
-        lualine_b = { { "filename", path = 1 }, "branch", { get_name, cond = is_active } },
+        lualine_b = {
+          { "filename", path = 1 },
+          "branch",
+          { get_name, cond = is_active },
+        },
         -- lualine_c = { 'fileformat' },
         lualine_c = {
           -- {
