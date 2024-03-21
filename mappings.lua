@@ -105,6 +105,20 @@ local maps = {
   },
 }
 
+-- NeoTree
+if is_available "neo-tree.nvim" then
+  maps.n["<leader>e"] = {
+    function()
+      if vim.bo.filetype == "neo-tree" then
+        vim.cmd.Neotree "toggle"
+      else
+        vim.cmd.Neotree "focus"
+      end
+    end,
+    desc = "Toggle Explorer",
+  }
+end
+
 -- Telescope
 if is_available "telescope.nvim" then
   maps.n["<leader>f`"] = { function() require("telescope.builtin").marks() end, desc = "Find marks" }
