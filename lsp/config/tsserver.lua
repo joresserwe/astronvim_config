@@ -1,6 +1,5 @@
 return {
   on_attach = function(client, bufnr)
-    vim.lsp.buf.inlay_hint(bufnr, true)
   end,
   settings = {
     -- specify some or all of the following settings if you want to adjust the default behavior
@@ -18,8 +17,8 @@ return {
     typescript = {
       inlayHints = {
         includeInlayEnumMemberValueHints = true,
-        includeInlayFunctionLikeReturnTypeHints = true,
-        includeInlayFunctionParameterTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true, -- Return 타입
+        includeInlayFunctionParameterTypeHints = true, -- Parameter 타입
         includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
         includeInlayParameterNameHintsWhenArgumentMatchesName = true,
         includeInlayPropertyDeclarationTypeHints = true,
