@@ -18,6 +18,7 @@ return {
         "eslint",
         "marksman",
         "yamlls",
+        "tailwindcss"
       })
     end,
   },
