@@ -2,6 +2,13 @@ return function(maps)
   local utils = require "astronvim.utils"
   local is_available = utils.is_available
 
+  if vim.tbl_contains({ "javascriptreact", "typescriptreact" }, vim.bo.filetype) then
+    maps.i["<>"] = {
+      "<></><left><left><left>",
+      desc = "which_key_ignore",
+    }
+  end
+
   -- LSP Code Action
   if maps.n["<leader>la"] then
     maps.n[";a"] = maps.n["<leader>la"]
@@ -25,7 +32,17 @@ return function(maps)
   end
 
   -- LSP Default rename symbol 비활성화
-  if is_available "inc-rename.nvim" then maps.n["<leader>lr"] = false end
+  if is_available "inc-rename.nvim" then
+    maps.n[";r"] = {
+      function()
+        require "inc_rename"
+        return ":IncRename " .. vim.fn.expand "<cword>"
+      end,
+      expr = true,
+      desc = "IncRename",
+    }
+    maps.n["<leader>lr"] = false
+  end
 
   -- Disable mappings
   maps.n["<leader>lR"] = false -- use 'gr'
