@@ -17,12 +17,6 @@ end
 
 return {
   {
-    "jose-elias-alvarez/null-ls.nvim",
-    opts = function(_, opts)
-      opts.sources = utils.list_insert_unique(opts.sources, require "typescript.extensions.null-ls.code-actions")
-    end,
-  },
-  {
     "vuki656/package-info.nvim",
     dependencies = { "MunifTanjim/nui.nvim" },
     opts = {},
