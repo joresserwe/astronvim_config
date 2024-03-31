@@ -63,14 +63,6 @@ local maps = {
     ["<C-0>"] = { "<C-w>+" },
 
     ["<leader>w"] = { function() require("astronvim.utils.buffer").close() end, desc = "Close buffer" },
-    ["<tab>"] = {
-      function() require("astronvim.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end,
-      desc = "Next buffer",
-    },
-    ["<S-tab>"] = {
-      function() require("astronvim.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1)) end,
-      desc = "Previous buffer",
-    },
 
     -- NeoTree
     ["<leader>e"] = {
@@ -116,6 +108,21 @@ if is_available "neo-tree.nvim" then
       end
     end,
     desc = "Toggle Explorer",
+  }
+end
+
+-- BufferLine Tab
+if is_available "bufferline.nvim" then
+  maps.n["<tab>"] = { function() require("bufferline").cycle(1) end, desc = "Next buffer" }
+  maps.n["<S-tab>"] = { function() require("bufferline").cycle(-1) end, desc = "Next buffer" }
+else
+  maps.n["<tab>"] = {
+    function() require("astronvim.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end,
+    desc = "Next buffer",
+  }
+  maps.n["<S-tab>"] = {
+    function() require("astronvim.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1)) end,
+    desc = "Previous buffer",
   }
 end
 
