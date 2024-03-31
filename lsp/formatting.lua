@@ -14,7 +14,7 @@ return {
     -- disable lua_ls formatting capability if you want to use StyLua to format your lua code
   },
   filter = function(client) -- fully override the default formatting function
-    local formatter_filter = { "null-ls", "cssls" }
+    local formatter_filter = { "null-ls" }
     return vim.tbl_contains(formatter_filter, client.name)
   end,
   --timeout_ms = 1000, -- default format timeout

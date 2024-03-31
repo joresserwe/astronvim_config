@@ -1,6 +1,5 @@
 return {
-  on_attach = function(client, bufnr)
-  end,
+  on_attach = function(client, bufnr) end,
   settings = {
     -- specify some or all of the following settings if you want to adjust the default behavior
     javascript = {
