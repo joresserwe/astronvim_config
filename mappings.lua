@@ -52,6 +52,11 @@ local maps = {
     ["<leader>O"] = { "O<ESC>", desc = "위로 한줄 띄기" },
     ["<leader><CR>"] = { "i<CR><ESC>k", desc = "현재 커서 위치에서 줄바꿈" },
 
+    -- Prevent conflict <C-i> and <Tab>
+    ["<C-p>"] = { "<C-o>" },
+    ["<C-n>"] = { "<C-i>" },
+    ["<C-o>"] = { "<Nop>" },
+
     -- Split
     ["<leader>\\"] = { "<C-w>v", desc = "세로 분할" },
     ["<leader>-"] = { "<C-w>s", desc = "가로 분할" },
