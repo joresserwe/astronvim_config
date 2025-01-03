@@ -29,7 +29,7 @@ M.config = {
       }
     }
   },
-  tsserver = {
+  ts_ls = {
     on_attach = function(client, bufnr) end,
     settings = {
       -- specify some or all of the following settings if you want to adjust the default behavior
