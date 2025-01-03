@@ -1,4 +1,4 @@
-local current_path = ... .. "."
+local current_path = "plugins/ui/"
 return {
   require(current_path .. "bufferline"),
   require(current_path .. "dashboard"),
