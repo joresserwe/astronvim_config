@@ -1,4 +1,4 @@
-local current_path = ... .. "."
+local current_path = "plugins/lsp/"
 return {
   require(current_path .. "language"),
 

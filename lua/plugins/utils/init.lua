@@ -1,5 +1,4 @@
-local current_path = ... .. "."
+local current_path = "plugins/utils/"
 return {
   require(current_path .. "kitty"),
-  require(current_path .. "which-key"),
 }

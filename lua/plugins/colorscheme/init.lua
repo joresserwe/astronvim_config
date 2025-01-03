@@ -1,4 +1,5 @@
-local current_path = ... .. "."
+local current_path = "plugins/colorscheme/"
+
 return {
   require(current_path .. "catppuccin"),
   require(current_path .. "onedark"),
