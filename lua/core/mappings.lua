@@ -1,5 +1,3 @@
--- TODO telescope-live-grep-args 확인
-
 ---@param opts AstroCoreOpts
 return function(opts)
   local astro = require "astrocore"

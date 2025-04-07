@@ -12,7 +12,7 @@ M.formatters_by_ft = {
   less = { { "stylelint", "prettierd" } },
   sh = { "shfmt" },
   zsh = { "shfmt" },
-
+  
   -- Conform will run multiple formatters sequentially
   -- python = { "isort", "black" },
   -- Use a sub-list to run only the first available formatter

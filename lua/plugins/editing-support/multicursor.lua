@@ -2,8 +2,9 @@ return {
   "smoka7/multicursors.nvim",
   event = "VeryLazy",
   dependencies = {
-    "smoka7/hydra.nvim",
+    "nvimtools/hydra.nvim",
   },
+  cmd = { 'MCstart', 'MCvisual', 'MCclear', 'MCpattern', 'MCvisualPattern', 'MCunderCursor' },
   opts = {
     normal_keys = {
       ["m"] = {

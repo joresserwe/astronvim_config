@@ -50,8 +50,8 @@ return function() -- this table overrides highlights in all themes
     BufferLineDuplicateSelected = { bg = tab_color.active.bg, bold = true, italic = true },
     BufferLineDuplicateVisible = { fg = tab_color.unfocused.fg, bg = tab_color.unfocused.bg },
 
-    -- BufferLineBackground = { fg = tab_color.inactive.fg, bg = tab_color.inactive.bg },
-    TabLineFill = { bg = tab_color.unfocused.bg },
+    -- TabLineFill = { bg = tab_color.unfocused.bg },
+    BufferLineBackground = { fg = tab_color.inactive.fg, bg = tab_color.inactive.bg },
     BufferLineBufferSelected = { bg = tab_color.active.bg },
     BufferLineBufferVisible = { fg = tab_color.unfocused.fg, bg = tab_color.unfocused.bg },
 
@@ -86,13 +86,16 @@ return function() -- this table overrides highlights in all themes
     -- BufferlineErrorDiagnosticVisible = { fg = get_hlgroup("DiagnosticError").fg },
   }
 
-  for _, icon in pairs(require("nvim-web-devicons").get_icons()) do
-    if not icon.name then goto continue end
-    bufferLine_hl["BufferLineDevIcon" .. icon.name] = { fg = tab_color.inactive.fg, bg = tab_color.inactive.bg }
-    bufferLine_hl["BufferLineDevIcon" .. icon.name .. "Selected"] = { bg = tab_color.active.bg }
-    bufferLine_hl["BufferLineDevIcon" .. icon.name .. "Inactive"] = { bg = tab_color.unfocused.bg }
-    ::continue::
+  print(require("mini.icons").mock_nvim_web_devicons().)
+  
+  for _, icon in pairs(require("mini.icons").get_icons()) do
+    print(icon.name)
+    -- if not icon.name then goto continue end
+    -- bufferLine_hl["BufferLineDevIcon" .. icon.name] = { fg = tab_color.inactive.fg, bg = tab_color.inactive.bg }
+    -- bufferLine_hl["BufferLineDevIcon" .. icon.name .. "Selected"] = { bg = tab_color.active.bg }
+    -- bufferLine_hl["BufferLineDevIcon" .. icon.name .. "Inactive"] = { bg = tab_color.unfocused.bg }
+    -- ::continue::
   end
-
+  
   return vim.tbl_extend("force", default_color, winbar_hl, neoTree_hl, bufferLine_hl, status_hl, telescope_hl)
 end
