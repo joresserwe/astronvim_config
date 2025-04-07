@@ -172,7 +172,7 @@ return function(opts)
     mappings.n["<Leader>sD"] = vim.tbl_get(opts, "mappings", "n", "<Leader>SD")
     mappings.n["<Leader>sf"] = vim.tbl_get(opts, "mappings", "n", "<Leader>Sf")
     mappings.n["<Leader>sF"] = vim.tbl_get(opts, "mappings", "n", "<Leader>SF")
-    mappings.n["<Leader>S."] = vim.tbl_get(opts, "mappings", "n", "<Leader>S.")
+    mappings.n["<Leader>s."] = vim.tbl_get(opts, "mappings", "n", "<Leader>S.")
   end
 
   -- Multicursor
@@ -259,10 +259,13 @@ return function(opts)
     }
     mappings.n["<Leader>lc"] = { "<cmd>ConformInfo<cr>", desc = "Conform Information" }
   end
-
+  
   -- disable key
   mappings.n["|"] = false
   mappings.n["\\"] = false
+  mappings.n["s"] = "<Nop>"
+  mappings.n["p"] = "<Nop>"
+  mappings.n["P"] = "<Nop>"
   mappings.n["<Leader>C"] = false
   mappings.n["<Leader>S"] = false
   mappings.n["<Leader>S."] = false
