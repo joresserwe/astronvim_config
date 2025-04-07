@@ -50,7 +50,8 @@ return function() -- this table overrides highlights in all themes
     BufferLineDuplicateSelected = { bg = tab_color.active.bg, bold = true, italic = true },
     BufferLineDuplicateVisible = { fg = tab_color.unfocused.fg, bg = tab_color.unfocused.bg },
 
-    BufferLineBackground = { fg = tab_color.inactive.fg, bg = tab_color.inactive.bg },
+    -- BufferLineBackground = { fg = tab_color.inactive.fg, bg = tab_color.inactive.bg },
+    TabLineFill = { bg = tab_color.unfocused.bg },
     BufferLineBufferSelected = { bg = tab_color.active.bg },
     BufferLineBufferVisible = { fg = tab_color.unfocused.fg, bg = tab_color.unfocused.bg },
 
