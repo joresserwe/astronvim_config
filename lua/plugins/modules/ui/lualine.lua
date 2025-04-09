@@ -50,8 +50,9 @@ return {
         -- theme = "vscode",
         component_separators = "|",
         section_separators = { left = "", right = "" },
-        disabled_filetypes = { "neo-tree" },
+        disabled_filetypes = { "neo-tree", "qf" },
         ignore_focus = {
+          "qf",
           "neo-tree",
           "toggleterm",
           "telescopePrompt",
