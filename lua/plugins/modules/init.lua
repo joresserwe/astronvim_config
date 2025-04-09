@@ -35,7 +35,6 @@ local function load_modules(dir)
     -- Skip init.lua and excluded modules
     if module_name ~= "init" and not vim.tbl_contains(exclude, module_name) then
       local full_module = base_module .. "." .. module_name
-      print (full_module)
       local ok, result = pcall(require, full_module)
       if ok then
         if type(result) == "table" then
@@ -46,7 +45,7 @@ local function load_modules(dir)
           end
         end
       else
-        print(("Failed to load module: %s\nReason: %s"):format(full_module, result))
+        vim.notify(('Failed to load module: %s\nReason: %s'):format(full_module, result), vim.log.levels.ERROR)
       end
     end
   end
