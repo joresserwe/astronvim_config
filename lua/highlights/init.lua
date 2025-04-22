@@ -1,6 +1,6 @@
 return function() -- this table overrides highlights in all themes
   local colors = require "highlights.colors"
-  local highlight_util = require "utils.highlight"
+  local highlight_util = require "highlights.utils"
   local get_hlgroup = require("astroui").get_hlgroup
 
   local tab_color = {
@@ -21,18 +21,23 @@ return function() -- this table overrides highlights in all themes
 
   local default_color = {
     -- NormalNC = { bg = "#252635" },
+    Normal = { bg = colors.none },
     NormalNC = { bg = colors.none },
+    NormalFloat = { bg = colors.none },
+    FloatTitle = { bg = colors.none },
   }
 
   local status_hl = {
     StatusLine = { fg = colors.none, bg = colors.none },
+    StatusLineNC = { fg = colors.none, bg = colors.none },
   }
 
-  local telescope_hl = {
-    TelescopeNormal = { bg = colors.none},
-    TelescopeBorder = { fg = colors.corn_flower_blue, bg = colors.none},
-    TelescopePromptTitle = { fg = colors.corn_flower_blue, bg = colors.none},
-    TelescopePromptBorder = { fg = colors.corn_flower_blue, bg = colors.none}
+  local picker_hl = {
+    -- TelescopeNormal = { bg = colors.none },
+    -- TelescopePromptTitle = { fg = colors.corn_flower_blue, bg = colors.none },
+    -- TelescopePromptBorder = { fg = colors.corn_flower_blue, bg = colors.none },
+    -- SnacksPickerBorder = { fg = colors.slate_blue, bg = colors.none },
+    -- SnacksPickerInputBorder = { fg = colors.slate_blue },
   }
 
   local winbar_hl = {
@@ -50,8 +55,8 @@ return function() -- this table overrides highlights in all themes
     BufferLineDuplicateSelected = { bg = tab_color.active.bg, bold = true, italic = true },
     BufferLineDuplicateVisible = { fg = tab_color.unfocused.fg, bg = tab_color.unfocused.bg },
 
-    -- BufferLineBackground = { fg = tab_color.inactive.fg, bg = tab_color.inactive.bg },
     TabLineFill = { bg = tab_color.unfocused.bg },
+    BufferLineBackground = { fg = tab_color.inactive.fg, bg = tab_color.inactive.bg },
     BufferLineBufferSelected = { bg = tab_color.active.bg },
     BufferLineBufferVisible = { fg = tab_color.unfocused.fg, bg = tab_color.unfocused.bg },
 
@@ -86,13 +91,14 @@ return function() -- this table overrides highlights in all themes
     -- BufferlineErrorDiagnosticVisible = { fg = get_hlgroup("DiagnosticError").fg },
   }
 
-  for _, icon in pairs(require("nvim-web-devicons").get_icons()) do
-    if not icon.name then goto continue end
-    bufferLine_hl["BufferLineDevIcon" .. icon.name] = { fg = tab_color.inactive.fg, bg = tab_color.inactive.bg }
-    bufferLine_hl["BufferLineDevIcon" .. icon.name .. "Selected"] = { bg = tab_color.active.bg }
-    bufferLine_hl["BufferLineDevIcon" .. icon.name .. "Inactive"] = { bg = tab_color.unfocused.bg }
-    ::continue::
-  end
+  -- for _, icon in pairs(require("mini.icons").get_icons()) do
+  --   print(icon.name)
+  --   -- if not icon.name then goto continue end
+  --   -- bufferLine_hl["BufferLineDevIcon" .. icon.name] = { fg = tab_color.inactive.fg, bg = tab_color.inactive.bg }
+  --   -- bufferLine_hl["BufferLineDevIcon" .. icon.name .. "Selected"] = { bg = tab_color.active.bg }
+  --   -- bufferLine_hl["BufferLineDevIcon" .. icon.name .. "Inactive"] = { bg = tab_color.unfocused.bg }
+  --   -- ::continue::
+  -- end
 
-  return vim.tbl_extend("force", default_color, winbar_hl, neoTree_hl, bufferLine_hl, status_hl, telescope_hl)
+  return vim.tbl_extend("force", default_color, winbar_hl, neoTree_hl, bufferLine_hl, status_hl, picker_hl)
 end

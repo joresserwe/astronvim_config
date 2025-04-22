@@ -1,5 +1,3 @@
--- TODO telescope-live-grep-args 확인
-
 ---@param opts AstroCoreOpts
 return function(opts)
   local astro = require "astrocore"
@@ -122,43 +120,46 @@ return function(opts)
   end
 
   -- Telescope
-  if is_available "telescope.nvim" then
-    mappings.n["<Leader>f`"] = { function() require("telescope.builtin").marks() end, desc = "Find marks" }
-    mappings.n["<Leader>f'"] = { function() require("telescope.builtin").registers() end, desc = "Find registers" }
-    mappings.n["<Leader>f/"] = { function() require("telescope.builtin").live_grep() end, desc = "Find words" }
+  if is_available "snacks.nvim" then
+    mappings.n["<Leader>f`"] = { function() require("snacks").picker.marks() end, desc = "Find marks" }
+    mappings.n["<Leader>f'"] = { function() require("snacks").picker.registers() end, desc = "Find registers" }
+    mappings.n["<Leader>f/"] = { function() require("snacks").picker.grep() end, desc = "Find words" }
     mappings.n["<Leader>f?"] = {
       function()
-        require("telescope.builtin").live_grep {
-          additional_args = function(args) return vim.list_extend(args, { "--hidden", "--no-ignore" }) end,
+        require("snacks").picker.grep {
+          hidden = true,
+          ignored = false,
         }
       end,
       desc = "Find words(숨김파일포함)",
     }
     mappings.n["<Leader>fe"] = {
-      function() require("telescope.builtin").oldfiles { cwd_only = true } end,
+      function() require("snacks").picker.recent { filter = { cwd = true } } end,
       desc = "Find history in CWD",
     }
-    mappings.n["<Leader>fE"] =
-      { function() require("telescope.builtin").oldfiles {} end, desc = "Find history All Path" }
-    if is_available "telescope-import.nvim" then
-      mappings.n["<Leader>fi"] =
-        { function() require("telescope").extensions.import.import {} end, desc = "Open import Browser" }
-    end
+    mappings.n["<Leader>fE"] = { function() require("snacks").picker.recent {} end, desc = "Find history All Path" }
+
     mappings.n["<Leader>fs"] = {
       function()
         local aerial_avail, _ = pcall(require, "aerial")
         if aerial_avail then
-          require("telescope").extensions.aerial.aerial()
+          require("aerial").snacks_picker {}
         else
-          require("telescope.builtin").lsp_document_symbols()
+          require("snacks").picker.lsp_symbols()
         end
       end,
       desc = "Search symbols",
     }
-    mappings.n["<Leader>fz"] =
-      { function() require("telescope").extensions.zoxide.list() end, desc = "Find directories" }
-    if is_available "telescope-file-browser.nvim" then
-      mappings.n["<Leader>fu"] = { function() require("telescope").extensions.undo.undo {} end, desc = "Find Undo" }
+
+    mappings.n["<Leader>fz"] = { function() require("snacks").picker.zoxide() end, desc = "Find directories" }
+    mappings.n["<Leader>fu"] = { function() require("snacks").picker.undo {} end, desc = "Find Undo" }
+    mappings.n["<Leader>fl"] = { function() require("snacks").picker.lines {} end, desc = "Find Undo" }
+  end
+
+  if is_available "telescope.nvim" then
+    if is_available "telescope-import.nvim" then
+      mappings.n["<Leader>fi"] =
+        { function() require("telescope").extensions.import.import {} end, desc = "Open import Browser" }
     end
   end
 
@@ -223,9 +224,11 @@ return function(opts)
   mappings.n["sd"] = vim.tbl_get(opts, "mappings", "n", "gl")
 
   if is_available "telescope-file-browser.nvim" then
-    mappings.n["su"] = { function() require("telescope").extensions.undo.undo {} end, desc = "Find Undo" }
     mappings.n["sf"] =
       { function() require("telescope").extensions.file_browser.file_browser {} end, desc = "Open File Browser" }
+  end
+  if is_available "snacks.nvim" then
+    mappings.n["su"] = { function() require("snacks").picker.undo {} end, desc = "Find Undo" }
   end
 
   if is_available "aerial.nvim" then
@@ -259,7 +262,7 @@ return function(opts)
     }
     mappings.n["<Leader>lc"] = { "<cmd>ConformInfo<cr>", desc = "Conform Information" }
   end
-  
+
   -- disable key
   mappings.n["|"] = false
   mappings.n["\\"] = false
@@ -294,7 +297,9 @@ return function(opts)
   mappings.n["<Leader>ds"] = false
   mappings.n["<Leader>du"] = false
   mappings.n["<Leader>fW"] = false
+  mappings.n["<Leader>fb"] = false
   mappings.n["<Leader>fo"] = false
+  mappings.n["<Leader>fO"] = false
   mappings.n["<Leader>fr"] = false
   mappings.n["<Leader>fw"] = false
   mappings.n["<Leader>h"] = false

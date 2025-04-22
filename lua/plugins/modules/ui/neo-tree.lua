@@ -18,6 +18,7 @@ return {
       ["ss"] = "order_by_size",
       ["st"] = "order_by_type",
       ["o"] = "child_or_open",
+      ["Y"] = "copy_selector",
       ["c"] = "add",
       ["oc"] = false,
       ["od"] = false,
