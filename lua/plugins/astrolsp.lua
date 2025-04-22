@@ -1,17 +1,20 @@
+-- AstroLSP allows you to customize the features in AstroNvim's LSP configuration engine
+-- Configuration documentation can be found with `:h astrolsp`
+-- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
+--       as this provides autocomplete and documentation while editing
+
 ---@type LazySpec
 return {
   {
-    "stevearc/conform.nvim",
-    optional = true,
+    "mfussenegger/nvim-lint",
     opts = {
-      formatters_by_ft = require("lsp.formatting").formatters_by_ft,
+      linters_by_ft = require("lsp.formatting").linters_by_ft,
     },
   },
   {
-    "mfussenegger/nvim-lint",
-    optional = true,
+    "stevearc/conform.nvim",
     opts = {
-      linters_by_ft = require("lsp.formatting").linters_by_ft,
+      formatters_by_ft = require("lsp.formatting").formatters_by_ft,
     },
   },
   {
@@ -24,18 +27,16 @@ return {
   },
   {
     "AstroNvim/astrolsp",
-    ---@params opts AstroLSPOpts
     opts = function(_, opts)
       local extend_tbl = require("astrocore").extend_tbl
+      -- Configuration table of features provided by AstroLSP
+      opts.features = extend_tbl(opts.features, require("lsp.config").features)
 
-      -- customize lsp formatting options
+      -- Configuration table of features provided by AstroLSP
       opts.formatting = extend_tbl(opts.formatting, require("lsp.formatting").formatting)
 
       -- enable servers that you already have installed without mason
       opts.servers = extend_tbl(opts.servers, require "lsp.servers")
-
-      -- Configuration table of features provided by AstroLSP
-      opts.features = extend_tbl(opts.features, require("lsp.config").features)
 
       -- customize how language servers are attached
       opts.handlers = extend_tbl(opts.handlers, require("lsp.config").handlers)
@@ -51,6 +52,6 @@ return {
 
       -- A custom `on_attach` function to be run after the default `on_attach` function
       opts.on_attach = require "lsp.on_attach"
-    end,
+    end
   },
 }

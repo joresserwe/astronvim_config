@@ -4,15 +4,12 @@ return {
     dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
   },
   {
-    "debugloop/telescope-undo.nvim",
-    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
-  },
-  {
     "piersolenski/telescope-import.nvim",
     dependencies = "nvim-telescope/telescope.nvim",
   },
   {
     "nvim-telescope/telescope.nvim",
+    event = "VeryLazy",
     opts = function(_, config)
       local astro = require "astrocore"
       local telescope = require "telescope"
@@ -44,6 +41,7 @@ return {
             previewer = false,
             initial_mode = "normal",
             layout_config = { height = 20 },
+
             mappings = {
               n = {
                 ["."] = fb_action.change_cwd,
@@ -77,7 +75,6 @@ return {
 
       astro.conditional_func(telescope.load_extension, pcall(require, "import"), "import")
       astro.conditional_func(telescope.load_extension, pcall(require, "file_browser"), "file_browser")
-      astro.conditional_func(telescope.load_extension, pcall(require, "undo"), "undo")
       return astro.extend_tbl(config, opts)
     end,
   },

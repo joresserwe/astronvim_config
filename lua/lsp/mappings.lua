@@ -53,5 +53,14 @@ return function(opts)
     desc = "Declaration of current symbol",
     cond = "textDocument/declaration",
   }
+  
+  mappings.n["<Leader>uY"] = {
+    function() require("astrolsp.toggles").buffer_semantic_tokens() end,
+    desc = "Toggle LSP semantic highlight (buffer)",
+    cond = function(client)
+      return client.supports_method "textDocument/semanticTokens/full" and vim.lsp.semantic_tokens ~= nil
+    end,
+  }
+  
   return mappings
 end

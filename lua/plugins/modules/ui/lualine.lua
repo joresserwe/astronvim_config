@@ -7,6 +7,7 @@ local colors = {
   red = "#ff5189",
   violet = "#d183e8",
   grey = "#303030",
+  lightgrey = "#777777",
 }
 
 local bubbles_theme = {
@@ -18,12 +19,12 @@ local bubbles_theme = {
 
   insert = { a = { fg = colors.black, bg = colors.blue } },
   visual = { a = { fg = colors.black, bg = colors.cyan } },
-  replace = { a = { fg = colors.black, bg = colors.red } },
+  replace = { a = { fg = colors.black, bg = colors.none } },
 
   inactive = {
     a = { fg = colors.white, bg = colors.none },
     b = { fg = colors.white, bg = colors.none },
-    c = { fg = colors.black, bg = colors.none },
+    c = { fg = colors.lightgrey, bg = colors.none },
   },
 }
 
@@ -49,6 +50,16 @@ return {
         -- theme = "vscode",
         component_separators = "|",
         section_separators = { left = "", right = "" },
+        disabled_filetypes = { "neo-tree", "qf" },
+        ignore_focus = {
+          "qf",
+          "neo-tree",
+          "toggleterm",
+          "telescopePrompt",
+          "mason",
+          "lazy",
+          "newtr",
+        },
       },
       sections = {
         lualine_a = {
@@ -85,11 +96,11 @@ return {
         lualine_a = {},
         lualine_b = {},
         lualine_c = {
-          -- {
-          --   "filename",
-          --   file_status = true, -- displays file status (readonly status, modified status)
-          --   path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
-          -- },
+          {
+            "filename",
+            file_status = true, -- displays file status (readonly status, modified status)
+            path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
+          },
         },
         lualine_x = { "location" },
         lualine_y = {},
