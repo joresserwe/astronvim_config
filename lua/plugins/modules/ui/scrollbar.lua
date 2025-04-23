@@ -1,9 +1,16 @@
 return {
-  "petertriho/nvim-scrollbar",
-  opts = function(_, opts)
-    opts.handle = require("astrocore").extend_tbl(opts.handle, {
-      color = require("highlights.colors").corn_flower_blue,
-      blend = 70,
+  {
+    "petertriho/nvim-scrollbar",
+    opts = {
+      handle = {
+        color = require("highlights.colors").slate_blue,
+        blend = 60,
+      },
+      handlers = {
+        gitsigns = require("astrocore").is_available "gitsigns.nvim",
+        search = require("astrocore").is_available "nvim-hlslens",
+        ale = require("astrocore").is_available "ale",
+      },
       excluded_filetypes = {
         "dropbar_menu",
         "dropbar_menu_fzf",
@@ -13,10 +20,22 @@ return {
         "noice",
         "prompt",
         "TelescopePrompt",
-        "blink_menu",
-        "blink_docs",
-      }
-    })
-  end,
-  event = "VeryLazy",
+        -- "blink-cmp-menu",
+        -- "blink-cmp-documentation",
+      },
+    },
+    event = "VeryLazy",
+  },
+  {
+    "saghen/blink.cmp",
+    ---@module "blink.cmp"
+    ---@type blink.cmp.Config
+    opts = {
+      completion = {
+        menu = {
+          scrollbar = false,
+        },
+      },
+    },
+  },
 }

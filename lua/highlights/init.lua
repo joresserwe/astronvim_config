@@ -50,6 +50,9 @@ return function() -- this table overrides highlights in all themes
     NeoTreeNormalNC = { bg = colors.none },
   }
 
+  local scrollbar_hl = {
+  }
+
   local bufferLine_hl = {
     BufferLineDuplicate = { fg = tab_color.inactive.fg, bg = tab_color.inactive.bg },
     BufferLineDuplicateSelected = { bg = tab_color.active.bg, bold = true, italic = true },
@@ -100,5 +103,14 @@ return function() -- this table overrides highlights in all themes
   --   -- ::continue::
   -- end
 
-  return vim.tbl_extend("force", default_color, winbar_hl, neoTree_hl, bufferLine_hl, status_hl, picker_hl)
+  return vim.tbl_extend(
+    "force",
+    default_color,
+    winbar_hl,
+    neoTree_hl,
+    bufferLine_hl,
+    status_hl,
+    picker_hl,
+    scrollbar_hl
+  )
 end

@@ -19,7 +19,5 @@ return {
 
   { import = "astrocommunity.scrolling.vim-smoothie" },
 
-  { import = "astrocommunity.split-and-window.colorful-winsep-nvim" },
-
   { import = "astrocommunity.utility.noice-nvim" },
 }
