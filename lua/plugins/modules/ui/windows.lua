@@ -4,10 +4,23 @@ return {
     "anuvyklack/middleclass",
     "anuvyklack/animation.nvim",
   },
-  config = function()
-    vim.o.winwidth = 10
-    vim.o.winminwidth = 10
-    vim.o.equalalways = false
-    require("windows").setup()
+  opts = {
+    autowidth = {
+      enable = true,
+      -- winwidth = 1, -- 최소 너비
+      -- filetype = {
+      --   help = 2,
+      -- },
+    },
+    ignore = {
+      filetype = { "Avante", "AvanteSelectedFiles", "AvanteInput", "codecompanion", "neo-tree" },
+      buftype = { "terminal", "nofile" },
+    },
+  },
+  config = function(_, opts)
+    -- vim.opt.winwidth = 10
+    -- vim.opt.winminwidth = 10
+    vim.opt.equalalways = false
+    require("windows").setup(opts)
   end,
 }
