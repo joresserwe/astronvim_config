@@ -33,3 +33,11 @@ tags
 
 # JetBrains
 .idea
+
+# Node
+package.json
+package-lock.json
+
+# Claude Code
+CLAUDE.md
+.claude/

@@ -21,7 +21,7 @@ M.options = {
     number = true, -- sets vim.opt.number
     smartindent = true, -- 들여쓰기를 자동으로 맞춘다
     spell = false, -- sets vim.opt.spell
-    signcolumn = "yes", -- sets vim.opt.signcolumn to yes 
+    signcolumn = "yes", -- sets vim.opt.signcolumn to yes
     wrap = false, -- sets vim.opt.wrap
   },
   g = {
@@ -35,7 +35,7 @@ M.filetypes = {
     -- foo = "fooscript",
   },
   filename = {
-    -- [".foorc"] = "fooscript",
+    ["biome.json"] = "jsonc",
   },
   pattern = {
     -- [".*/etc/foo/.*"] = "fooscript",

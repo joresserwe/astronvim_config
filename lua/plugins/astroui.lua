@@ -11,9 +11,9 @@ return {
     opts = {
       -- change colorscheme
       -- colorscheme = "astrodark",
-      colorscheme = "solarized-osaka",
+      -- colorscheme = "solarized-osaka",
       -- colorscheme = "catppuccin",
-      -- colorscheme = "tokyonight",
+      colorscheme = "tokyonight",
       -- colorscheme = "midnight",
       -- colorscheme = "onedark_dark",
       -- colorscheme = "vscode",
