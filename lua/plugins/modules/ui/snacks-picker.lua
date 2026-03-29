@@ -1,4 +1,3 @@
--- preview 관련 설정 수정 필요함 (preview일 때 list / list일 때 preview, list일때 h/l을 눌렀을 때 preview로 이동하는 것도 ㄱㅊ을 듯 함)
 return {
   "folke/snacks.nvim",
   ---@type snacks.Config
@@ -23,10 +22,29 @@ return {
         },
         preview = {
           keys = {
-            ["<c-l>"] = "preview_scroll_right",
-            ["<c-h>"] = "preview_scroll_left",
-          }
-        }
+            ["<c-i>"] = "focus_input",
+            ["<c-p>"] = "focus_list",
+            ["<c-l>"] = "focus_list",
+          },
+        },
+      },
+      sources = {
+        notifications = {
+          layout = {
+            layout = {
+              box = "vertical", -- 전체 구조를 수직으로 배치
+              width = 0.7,
+              height = 0.6,
+              border = "rounded",
+              { win = "input", height = 1, border = "bottom", title = "Filter", title_pos = "center" },
+              { win = "list", border = "rounded", title = "Notifications", title_pos = "center" },
+              { win = "preview", height = 0.5, border = "none" },
+            },
+          },
+          confirm = "close",
+          formatters = { severity = { level = true } },
+          focus = "list",
+        },
       },
     },
   },

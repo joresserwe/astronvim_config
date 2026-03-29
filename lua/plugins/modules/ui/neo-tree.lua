@@ -4,7 +4,8 @@ return {
     opts.filesystem.filtered_items = {
       hide_gitignored = false,
     }
-    opts.window.mappings = {
+
+    opts.window.mappings = vim.tbl_deep_extend("force", opts.window.mappings or {}, {
       ["l"] = "child_or_open",
       ["h"] = "close_node",
       ["\\"] = "open_vsplit",
@@ -29,6 +30,6 @@ return {
       ["ot"] = false,
       ["S"] = false,
       ["C"] = false,
-    }
+    })
   end,
 }
