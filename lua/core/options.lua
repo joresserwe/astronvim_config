@@ -23,6 +23,7 @@ M.options = {
     spell = false, -- sets vim.opt.spell
     signcolumn = "yes", -- sets vim.opt.signcolumn to yes
     wrap = false, -- sets vim.opt.wrap
+    foldcolumn = "0", -- fold 레벨 숫자 표시 비활성화
   },
   g = {
     autoformat = false,
