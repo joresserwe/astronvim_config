@@ -19,15 +19,44 @@ M.handlers = {
 
 -- customize language server configuration options passed to `lspconfig`
 M.config = {
+  biome = {
+    filetypes = {
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact",
+      "vue",
+      "json",
+      "jsonc",
+    },
+    root_dir = require("lspconfig").util.root_pattern("biome.json", "biome.jsonc", ".git"),
+    single_file_support = false,
+    settings = {
+    biome = {
+      -- formatter와 linter 모두 활성화
+      enabled = true,
+      formatter = {
+        enabled = true,
+      },
+      linter = {
+        enabled = true,
+      },
+      -- 파일 저장 시 자동 수정
+      codeActions = {
+        enabled = true,
+      }
+    }
+  },
+  },
   lua_ls = {
     settings = {
       Lua = {
         hint = {
           enable = true,
-          arrayIndex = "Disable"
-        }
-      }
-    }
+          arrayIndex = "Disable",
+        },
+      },
+    },
   },
   ts_ls = {
     on_attach = function(client, bufnr) end,

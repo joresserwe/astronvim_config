@@ -20,7 +20,10 @@ M.mason = function(_, opts)
     "shellcheck",
     "debugpy",
     "tree-sitter-cli",
-    -- "marksman",
+    "marksman",
+    "mdformat",
+    "json-lsp",
+    -- "biome"
   })
 end
 
@@ -35,12 +38,12 @@ M.treesitter = function(_, opts)
     "tsx",
     "jsdoc",
     "bash",
+    "markdown",
+    "markdown_inline",
+    "json",
+    "json5",
     -- "lua",
     -- "luap",
-    -- "json",
-    -- "jsonc",
-    -- "markdown",
-    -- "markdown_inline",
     -- "yaml",
   })
 end

@@ -1,32 +1,51 @@
 local M = {}
 
 -- conform.nvim
-M.formatters_by_ft = {
-  lua = { "stylua" },
-  javascriptreact = { "eslint_d" },
-  typescriptreact = { "eslint_d" },
-  json = { "jq" },
-  html = { "stylelint", "prettierd", stop_after_start = true },
-  css = { "stylelint", "prettierd", stop_after_start = true },
-  scss = { "stylelint", "prettierd", stop_after_start = true },
-  less = { "stylelint", "prettierd", stop_after_start = true },
-  sh = { "shfmt" },
-  zsh = { "shfmt" },
-
-  -- Conform will run multiple formatters sequentially
-  -- python = { "isort", "black" },
-  -- Use a sub-list to run only the first available formatter
-  -- javascript = { { "prettierd", "prettier" } },
+M.conform_opts = {
+  formatters_by_ft = {
+    lua = { "stylua" },
+    javascript = { "biome" },
+    javascriptreact = { "biome" },
+    typescript = { "biome" },
+    typescriptreact = { "biome" },
+    json = { "biome" },
+    html = { "stylelint", "prettierd", stop_after_first = true },
+    css = { "stylelint", "prettierd", stop_after_first = true },
+    scss = { "stylelint", "prettierd", stop_after_first = true },
+    less = { "stylelint", "prettierd", stop_after_first = true },
+    sh = { "shfmt" },
+    zsh = { "shfmt" },
+    markdown = { "mdformat" },
+    -- Conform will run multiple formatters sequentially
+    -- python = { "isort", "black" },
+    -- Use a sub-list to run only the first available formatter
+    -- javascript = { { "prettierd", "prettier" } },
+  },
+  formatters = {
+    biome = {
+      command = "biome",
+      args = {
+        "check",
+        "--write",
+        "--stdin-file-path",
+        "$FILENAME",
+      },
+      stdin = true,
+    },
+  },
 }
-
 -- nvim-lint
 M.linters_by_ft = {
-  javascriptreact = { "eslint_d" },
-  typescriptreact = { "eslint_d" },
+  -- javascript = { "biomejs", "eslint_d" },
+  -- javascriptreact = { "biomejs", "eslint_d" },
+  -- typescript = { "biomejs" },
+  -- typescript = { "biomejs", "eslint_d" },
+  -- typescriptreact = { "biomejs", "eslint_d" },
   css = { "stylelint" },
   scss = { "stylelint" },
   less = { "stylelint" },
   sh = { "shellcheck" },
+  marksman = { "marksman" },
 }
 
 -- customize lsp formatting options
@@ -52,7 +71,6 @@ M.formatting = {
     -- return vim.tbl_contains(formatter_filter, client.name)
     return true
   end,
-  --timeout_ms = 1000, -- default format timeout
 }
 
 return M
