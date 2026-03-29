@@ -8,6 +8,10 @@ return {
   { import = "astrocommunity.editing-support.conform-nvim" },
   { import = "astrocommunity.editing-support.refactoring-nvim" },
 
+  { import = "astrocommunity.completion.blink-cmp" },
+  -- { import = "astrocommunity.completion.blink-cmp-git" },
+  { import = "astrocommunity.completion.blink-cmp-emoji" },
+
   { import = "astrocommunity.git.diffview-nvim" },
 
   { import = "astrocommunity.lsp.garbage-day-nvim" },
