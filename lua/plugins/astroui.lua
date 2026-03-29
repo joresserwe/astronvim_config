@@ -19,7 +19,7 @@ return {
       -- colorscheme = "vscode",
       -- AstroUI allows you to easily modify highlight groups easily for any and all colorschemes
       highlights = {
-        init = require "highlights",
+        init = require("highlights").build,
         -- init = {},
         astrodark = { -- a table of overrides/changes when applying the astrotheme theme
           -- Normal = { bg = "#000000" },
@@ -40,14 +40,5 @@ return {
         LSPLoading10 = "⠏",
       },
     },
-    -- {
-    --   "AstroNvim/astrocore",
-    --   opts = function(_, opts)
-    --     local extend_tbl = require("astrocore").extend_tbl
-    --
-    --     -- Configure buffer local auto commands
-    --     opts.autocmds = extend_tbl(opts.autocmds, require "highlights.autocmds")
-    --   end,
-    -- },
   },
 }

@@ -3,7 +3,7 @@ return {
     "petertriho/nvim-scrollbar",
     opts = {
       handle = {
-        color = require("highlights.colors").slate_blue,
+        color = require("highlights").scrollbar,
         blend = 60,
       },
       handlers = {
@@ -20,8 +20,6 @@ return {
         "noice",
         "prompt",
         "TelescopePrompt",
-        -- "blink-cmp-menu",
-        -- "blink-cmp-documentation",
       },
     },
     event = "VeryLazy",

@@ -1,149 +1,73 @@
- return {
-  none = "NONE",
-  fg = "#abb2bf",
-  inactive_fg = "#545c7e",
-  unfocus_fg = "#c0caf5",
-  bg = "#1e222a",
-  dark_bg = "#2c323c",
-  maroon = "#800000",
-  dark_red = "#8B0000",
-  brown = "#A52A2A",
-  firebrick = "#B22222",
-  crimson = "#DC143C",
-  red = "#FF0000",
-  tomato = "#FF6347",
-  coral = "#FF7F50",
-  indian_red = "#CD5C5C",
-  light_coral = "#F08080",
-  dark_salmon = "#E9967A",
-  salmon = "#FA8072",
-  light_salmon = "#FFA07A",
-  orange_red = "#FF4500",
-  dark_orange = "#FF8C00",
-  orange = "#FFA500",
-  gold = "#FFD700",
-  dark_golden_rod = "#B8860B",
-  golden_rod = "#DAA520",
-  pale_golden_rod = "#EEE8AA",
-  dark_khaki = "#BDB76B",
-  khaki = "#F0E68C",
-  olive = "#808000",
-  yellow = "#FFFF00",
-  yellow_green = "#9ACD32",
-  dark_olive_green = "#556B2F",
-  olive_drab = "#6B8E23",
-  lawn_green = "#7CFC00",
-  chart_reuse = "#7FFF00",
-  green_yellow = "#ADFF2F",
-  dark_green = "#006400",
-  green = "#008000",
-  forest_green = "#228B22",
-  lime = "#00FF00",
-  lime_green = "#32CD32",
-  light_green = "#90EE90",
-  pale_green = "#98FB98",
-  dark_sea_green = "#8FBC8F",
-  medium_spring_green = "#00FA9A",
-  spring_green = "#00FF7F",
-  sea_green = "#2E8B57",
-  medium_aqua_marine = "#66CDAA",
-  medium_sea_green = "#3CB371",
-  light_sea_green = "#20B2AA",
-  dark_slate_gray = "#2F4F4F",
-  teal = "#008080",
-  dark_cyan = "#008B8B",
-  aqua = "#00FFFF",
-  cyan = "#00FFFF",
-  light_cyan = "#E0FFFF",
-  dark_turquoise = "#00CED1",
-  turquoise = "#40E0D0",
-  medium_turquoise = "#48D1CC",
-  pale_turquoise = "#AFEEEE",
-  aqua_marine = "#7FFFD4",
-  powder_blue = "#B0E0E6",
-  cadet_blue = "#5F9EA0",
-  steel_blue = "#4682B4",
-  corn_flower_blue = "#6495ED",
-  deep_sky_blue = "#00BFFF",
-  dodger_blue = "#1E90FF",
-  light_blue = "#ADD8E6",
-  sky_blue = "#87CEEB",
-  light_sky_blue = "#87CEFA",
-  midnight_blue = "#191970",
-  navy = "#000080",
-  dark_blue = "#00008B",
-  medium_blue = "#0000CD",
-  blue = "#0000FF",
-  royal_blue = "#4169E1",
-  blue_violet = "#8A2BE2",
-  indigo = "#4B0082",
-  dark_slate_blue = "#483D8B",
-  slate_blue = "#6A5ACD",
-  medium_slate_blue = "#7B68EE",
-  medium_purple = "#9370DB",
-  dark_magenta = "#8B008B",
-  dark_violet = "#9400D3",
-  dark_orchid = "#9932CC",
-  medium_orchid = "#BA55D3",
-  purple = "#800080",
-  thistle = "#D8BFD8",
-  plum = "#DDA0DD",
-  violet = "#EE82EE",
-  magenta_fuchsia = "#FF00FF",
-  orchid = "#DA70D6",
-  medium_violet_red = "#C71585",
-  pale_violet_red = "#DB7093",
-  deep_pink = "#FF1493",
-  hot_pink = "#FF69B4",
-  light_pink = "#FFB6C1",
-  pink = "#FFC0CB",
-  antique_white = "#FAEBD7",
-  beige = "#F5F5DC",
-  bisque = "#FFE4C4",
-  blanched_almond = "#FFEBCD",
-  wheat = "#F5DEB3",
-  corn_silk = "#FFF8DC",
-  lemon_chiffon = "#FFFACD",
-  light_golden_rod_yellow = "#FAFAD2",
-  light_yellow = "#FFFFE0",
-  saddle_brown = "#8B4513",
-  sienna = "#A0522D",
-  chocolate = "#D2691E",
-  peru = "#CD853F",
-  sandy_brown = "#F4A460",
-  burly_wood = "#DEB887",
-  tan = "#D2B48C",
-  rosy_brown = "#BC8F8F",
-  moccasin = "#FFE4B5",
-  navajo_white = "#FFDEAD",
-  peach_puff = "#FFDAB9",
-  misty_rose = "#FFE4E1",
-  lavender_blush = "#FFF0F5",
-  linen = "#FAF0E6",
-  old_lace = "#FDF5E6",
-  papaya_whip = "#FFEFD5",
-  sea_shell = "#FFF5EE",
-  mint_cream = "#F5FFFA",
-  slate_gray = "#708090",
-  light_slate_gray = "#778899",
-  light_steel_blue = "#B0C4DE",
-  lavender = "#E6E6FA",
-  floral_white = "#FFFAF0",
-  alice_blue = "#F0F8FF",
-  ghost_white = "#F8F8FF",
-  honeydew = "#F0FFF0",
-  ivory = "#FFFFF0",
-  azure = "#F0FFFF",
-  snow = "#FFFAFA",
-  black = "#000000",
-  dim_gray = "#696969",
-  gray = "#808080",
-  dark_gray = "#A9A9A9",
-  black_gray = "#404040",
-  silver = "#C0C0C0",
-  light_gray = "#D3D3D3",
-  gainsboro = "#DCDCDC",
-  white_smoke = "#F5F5F5",
-  white = "#FFFFFF",
-}
+-- 사용자 색상 설정
+-- nil이면 테마 색상을 자동으로 따라감
+-- 직접 색상값("#RRGGBB")을 지정하면 테마 대신 해당 색상을 사용
 
+local NONE = "NONE"
+
+return {
+  transparent_bg = true,
+
+  -- 시맨틱 색상
+  bg = nil, -- 배경
+  fg = nil, -- 전경
+  accent = nil, -- 주요 강조 (winbar, scrollbar 등)
+  indicator = require("highlights.palette").lime, -- 활성 탭 indicator
+  inactive = nil, -- 비활성 요소 (비활성 탭, winbar 등)
+  unfocused = nil, -- 포커스 없는 요소
+  danger = require("highlights.palette").crimson, -- 비포커스 indicator
+  scrollbar = require("highlights.palette").slate_blue, -- scrollbar handle
+
+  --- highlight group 정의 (c: resolve된 시맨틱 색상, bg: 투명 처리된 배경)
+  ---@param c table
+  ---@param bg string
+  highlights = function(c, bg)
+    return {
+      -- 배경
+      Normal = { bg = bg },
+      NormalNC = { bg = bg },
+      NormalFloat = { bg = bg },
+      FloatTitle = { bg = bg },
+      StatusLine = { fg = NONE, bg = NONE },
+      StatusLineNC = { fg = NONE, bg = NONE },
+
+      -- WinBar
+      WinBar = { fg = c.accent, bg = NONE },
+      WinBarNC = { fg = c.inactive, bg = bg },
+
+      -- NeoTree
+      NeoTreeNormal = { bg = bg },
+      NeoTreeNormalNC = { bg = bg },
+
+      -- BufferLine: 탭 배경
+      TabLineFill = { bg = NONE },
+      BufferLineBackground = { fg = c.inactive, bg = NONE },
+      BufferLineBufferSelected = { bg = NONE },
+      BufferLineBufferVisible = { fg = c.unfocused, bg = NONE },
+
+      -- BufferLine: 중복 표시
+      BufferLineDuplicate = { fg = c.inactive, bg = NONE },
+      BufferLineDuplicateSelected = { bg = NONE, bold = true, italic = true },
+      BufferLineDuplicateVisible = { fg = c.unfocused, bg = NONE },
+
+      -- BufferLine: 구분선
+      BufferLineSeparator = { fg = c.bg, bg = NONE },
+      BufferLineSeparatorSelected = { fg = NONE, bg = c.indicator },
+      BufferLineSeparatorVisible = { fg = c.bg, bg = NONE },
+
+      -- BufferLine: indicator
+      BufferLineIndicatorSelected = { fg = c.indicator, bg = NONE },
+      BufferLineIndicatorVisible = { fg = c.danger, bg = NONE },
+
+      -- BufferLine: 수정됨 표시
+      BufferLineModified = { bg = NONE },
+      BufferLineModifiedSelected = { bg = NONE },
+      BufferLineModifiedVisible = { bg = NONE },
+
+      -- BufferLine: visible 탭 진단 표시
+      BufferLineHintVisible = { fg = c.unfocused },
+      BufferLineInfoVisible = { fg = c.unfocused },
+      BufferLineWarningVisible = { fg = c.unfocused },
+      BufferLineErrorVisible = { fg = c.unfocused },
+    }
+  end,
+}
