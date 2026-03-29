@@ -1,116 +1,99 @@
-return function() -- this table overrides highlights in all themes
-  local colors = require "highlights.colors"
-  local highlight_util = require "highlights.utils"
-  local get_hlgroup = require("astroui").get_hlgroup
+local user = require "highlights.colors"
 
-  local tab_color = {
-    active = {
-      bg = colors.none,
-      indicator = colors.lime,
-    },
-    inactive = {
-      fg = colors.inactive_fg,
-      bg = colors.none,
-    },
-    unfocused = {
-      fg = highlight_util.blend(colors.unfocus_fg, 0.5, colors.inactive_fg),
-      bg = colors.none,
-      indicator = colors.crimson,
-    },
+-- 색상 유틸 ---------------------------------------------------------------
+
+local function hex_to_rgb(hex)
+  hex = string.lower(hex)
+  return {
+    r = tonumber(hex:sub(2, 3), 16),
+    g = tonumber(hex:sub(4, 5), 16),
+    b = tonumber(hex:sub(6, 7), 16),
   }
-
-  local default_color = {
-    -- NormalNC = { bg = "#252635" },
-    Normal = { bg = colors.none },
-    NormalNC = { bg = colors.none },
-    NormalFloat = { bg = colors.none },
-    FloatTitle = { bg = colors.none },
-  }
-
-  local status_hl = {
-    StatusLine = { fg = colors.none, bg = colors.none },
-    StatusLineNC = { fg = colors.none, bg = colors.none },
-  }
-
-  local picker_hl = {
-    -- TelescopeNormal = { bg = colors.none },
-    -- TelescopePromptTitle = { fg = colors.corn_flower_blue, bg = colors.none },
-    -- TelescopePromptBorder = { fg = colors.corn_flower_blue, bg = colors.none },
-    -- SnacksPickerBorder = { fg = colors.slate_blue, bg = colors.none },
-    -- SnacksPickerInputBorder = { fg = colors.slate_blue },
-  }
-
-  local winbar_hl = {
-    WinBar = { fg = colors.corn_flower_blue, bg = colors.none },
-    WinBarNC = { fg = colors.inactive_fg, bg = default_color.NormalNC.bg },
-  }
-
-  local neoTree_hl = {
-    NeoTreeNormal = { bg = colors.none },
-    NeoTreeNormalNC = { bg = colors.none },
-  }
-
-  local scrollbar_hl = {
-  }
-
-  local bufferLine_hl = {
-    BufferLineDuplicate = { fg = tab_color.inactive.fg, bg = tab_color.inactive.bg },
-    BufferLineDuplicateSelected = { bg = tab_color.active.bg, bold = true, italic = true },
-    BufferLineDuplicateVisible = { fg = tab_color.unfocused.fg, bg = tab_color.unfocused.bg },
-
-    TabLineFill = { bg = tab_color.unfocused.bg },
-    BufferLineBackground = { fg = tab_color.inactive.fg, bg = tab_color.inactive.bg },
-    BufferLineBufferSelected = { bg = tab_color.active.bg },
-    BufferLineBufferVisible = { fg = tab_color.unfocused.fg, bg = tab_color.unfocused.bg },
-
-    BufferLineSeperator = { fg = colors.bg, bg = colors.none },
-    BufferLineSeperatorSelected = { fg = colors.none, bg = tab_color.active.indicator },
-    BufferLineSeperatorVisible = { fg = colors.bg, bg = colors.none },
-
-    BufferLineIndicatorSelected = { fg = tab_color.active.indicator, bg = tab_color.active.bg },
-    BufferLineIndicatorVisible = { fg = tab_color.unfocused.indicator, bg = tab_color.unfocused.bg },
-
-    BufferLineModified = { bg = tab_color.inactive.bg },
-    BufferLineModifiedSelected = { bg = tab_color.active.bg },
-    BufferLineModifiedVisible = { bg = tab_color.unfocused.bg },
-
-    BufferlineDiagnnosticVisible = { fg = colors.red },
-
-    BufferlineHintVisible = { fg = tab_color.unfocused.fg },
-    -- BufferlineHintDiagnosticVisible = { fg = tab.unfocused.fg },
-    BufferlineInfoVisible = { fg = tab_color.unfocused.fg },
-    -- BufferlineInfoDiagnosticVisible = { fg = tab.unfocused.fg },
-    BufferlineWarningVisible = { fg = tab_color.unfocused.fg },
-    -- BufferlineWarningDiagnosticVisible = { fg = tab.unfocused.fg },
-    BufferlineErrorVisible = { fg = tab_color.unfocused.fg },
-    -- BufferlineErrorDiagnosticVisible = { fg = tab.unfocused.fg },
-    -- BufferlineHintVisible = { fg = get_hlgroup("DiagnosticHint").fg },
-    -- BufferlineHintDiagnosticVisible = { fg = get_hlgroup("DiagnosticHint").fg },
-    -- BufferlineInfoVisible = { fg = get_hlgroup("DiagnosticInfo").fg },
-    -- BufferlineInfoDiagnosticVisible = { fg = get_hlgroup("DiagnosticInfo").fg },
-    -- BufferlineWarningVisible = { fg = get_hlgroup("DiagnosticWarn").fg },
-    -- BufferlineWarningDiagnosticVisible = { fg = get_hlgroup("DiagnosticWarn").fg },
-    -- BufferlineErrorVisible = { fg = get_hlgroup("DiagnosticError").fg },
-    -- BufferlineErrorDiagnosticVisible = { fg = get_hlgroup("DiagnosticError").fg },
-  }
-
-  -- for _, icon in pairs(require("mini.icons").get_icons()) do
-  --   print(icon.name)
-  --   -- if not icon.name then goto continue end
-  --   -- bufferLine_hl["BufferLineDevIcon" .. icon.name] = { fg = tab_color.inactive.fg, bg = tab_color.inactive.bg }
-  --   -- bufferLine_hl["BufferLineDevIcon" .. icon.name .. "Selected"] = { bg = tab_color.active.bg }
-  --   -- bufferLine_hl["BufferLineDevIcon" .. icon.name .. "Inactive"] = { bg = tab_color.unfocused.bg }
-  --   -- ::continue::
-  -- end
-
-  return vim.tbl_extend(
-    "force",
-    default_color,
-    winbar_hl,
-    neoTree_hl,
-    bufferLine_hl,
-    status_hl,
-    picker_hl,
-    scrollbar_hl
-  )
 end
+
+local function rgb_to_hex(rgb)
+  return string.format("#%02x%02x%02x", rgb.r, rgb.g, rgb.b)
+end
+
+local function rgba(r, g, b, alpha, base)
+  local base_rgb = hex_to_rgb(base)
+  return rgb_to_hex {
+    r = (1 - alpha) * base_rgb.r + alpha * r,
+    g = (1 - alpha) * base_rgb.g + alpha * g,
+    b = (1 - alpha) * base_rgb.b + alpha * b,
+  }
+end
+
+--- alpha가 클수록 hexColor에 가까워진다
+local function blend(hexColor, alpha, base)
+  local rgb = hex_to_rgb(hexColor)
+  return rgba(rgb.r, rgb.g, rgb.b, alpha, base)
+end
+
+-- 테마 팔레트 추출 ---------------------------------------------------------
+
+local function palette()
+  local function get_fg(name)
+    local h = vim.api.nvim_get_hl(0, { name = name, link = false })
+    return h.fg and string.format("#%06x", h.fg)
+  end
+  local function get_bg(name)
+    local h = vim.api.nvim_get_hl(0, { name = name, link = false })
+    return h.bg and string.format("#%06x", h.bg)
+  end
+  return {
+    fg = get_fg "Normal",
+    bg = get_bg "Normal" or "#1e1e2e",
+    comment = get_fg "Comment" or "#545c7e",
+    accent = get_fg "Function" or "#6495ED",
+    string = get_fg "String" or "#00FF00",
+    error = get_fg "DiagnosticError" or "#DC143C",
+    warn = get_fg "DiagnosticWarn" or "#FF8C00",
+    info = get_fg "DiagnosticInfo" or "#00BFFF",
+    hint = get_fg "DiagnosticHint" or "#9370DB",
+  }
+end
+
+-- 시맨틱 색상 resolve (사용자 설정 → 테마 폴백) ----------------------------
+
+local _cache = nil
+
+local function resolve()
+  if _cache then return _cache end
+  local p = palette()
+  local inactive = user.inactive or p.comment
+  _cache = {
+    transparent_bg = user.transparent_bg,
+    bg = user.bg or p.bg,
+    fg = user.fg or p.fg,
+    accent = user.accent or p.accent,
+    indicator = user.indicator or p.string,
+    inactive = inactive,
+    unfocused = user.unfocused or blend(p.fg, 0.5, inactive),
+    danger = user.danger or p.error,
+    scrollbar = user.scrollbar or p.accent,
+  }
+  return _cache
+end
+
+local function invalidate() _cache = nil end
+
+-- 외부 접근용 (scrollbar 등에서 require("highlights").accent 형태로 사용)
+local M = { invalidate = invalidate }
+setmetatable(M, {
+  __index = function(_, k)
+    return resolve()[k]
+  end,
+})
+
+-- AstroUI용 highlight 빌더 ------------------------------------------------
+
+function M.build()
+  invalidate()
+  local c = resolve()
+  local NONE = "NONE"
+  local bg = c.transparent_bg and NONE or c.bg
+  return user.highlights(c, bg)
+end
+
+return M
