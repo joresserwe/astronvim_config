@@ -1,7 +1,7 @@
 local M = {}
 
 local exclude = {
-  "lsp.cmp", -- Modules to exclude (e.g., plugins/module/lsp/cmp.lua)
+  "lsp.cmp", -- Specific module to exclude (e.g., plugins/module/lsp/cmp.lua)
   "ui.dashboard",
   "utils.kitty",
   "utils.molten",
@@ -21,18 +21,48 @@ local function get_base_module(current_dir)
   return relative_path:gsub("/", "."):gsub("^%.", "")
 end
 
+-- Function to check if a module should be excluded
+local function should_exclude(module_name)
+  for _, pattern in ipairs(exclude) do
+    if module_name == pattern or module_name:sub(1, #pattern) == pattern then return true end
+  end
+  return false
+end
+
+-- init.lua가 있는 디렉토리를 수집 — 해당 디렉토리의 하위 파일은 init.lua가 직접 관리
+local function collect_init_dirs(modules, dir)
+  local init_dirs = {}
+  for _, path in ipairs(modules) do
+    local normalized = normalize_path(path)
+    if normalized:match "/init%.lua$" and normalized ~= normalize_path(dir .. "/init.lua") then
+      local init_dir = normalized:gsub("/init%.lua$", "")
+      init_dirs[init_dir] = true
+    end
+  end
+  return init_dirs
+end
+
+-- 경로가 init_dirs에 속하는 하위 파일인지 확인
+local function is_child_of_init_dir(path, init_dirs)
+  for init_dir in pairs(init_dirs) do
+    if path ~= init_dir .. "/init.lua" and path:sub(1, #init_dir + 1) == init_dir .. "/" then return true end
+  end
+  return false
+end
+
 -- Load all Lua files recursively from a given directory
 local function load_modules(dir)
   dir = normalize_path(dir)
   local modules = vim.fn.globpath(dir, "**/*.lua", true, true) -- Find all Lua files recursively
   local base_module = get_base_module(dir) -- Dynamically determine the base module name
+  local init_dirs = collect_init_dirs(modules, dir)
 
   for _, path in ipairs(modules) do
     local normalized = normalize_path(path)
     local module_name = normalized:gsub("^" .. dir:gsub("%.", "%%%.") .. "/?", ""):gsub("/", "."):gsub("%.lua$", "")
 
-    -- Skip init.lua and excluded modules
-    if module_name ~= "init" and not vim.tbl_contains(exclude, module_name) then
+    -- Skip: root init.lua, excluded modules, child files of directories with their own init.lua
+    if module_name ~= "init" and not should_exclude(module_name) and not is_child_of_init_dir(normalized, init_dirs) then
       local full_module = base_module .. "." .. module_name
       local ok, result = pcall(require, full_module)
       if ok then
@@ -44,7 +74,7 @@ local function load_modules(dir)
           end
         end
       else
-        vim.notify(('Failed to load module: %s\nReason: %s'):format(full_module, result), vim.log.levels.ERROR)
+        vim.notify(("Failed to load module: %s\nReason: %s"):format(full_module, result), vim.log.levels.ERROR)
       end
     end
   end
