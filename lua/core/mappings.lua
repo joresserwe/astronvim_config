@@ -30,6 +30,7 @@ return function(opts)
 
   opts._map_sections = vim.tbl_deep_extend("force", opts._map_sections or {}, {
     s = { desc = get_icon("Window", 1, true) .. "Show" },
+    p = { desc = get_icon("Paste", 1, true) .. "Paste" },
   })
 
   ---------------------------------------------------------------------------
@@ -56,6 +57,7 @@ return function(opts)
       ["<Leader>c"] = { '"_ciw', desc = "단어 편집" },
       ["<Leader>x"] = { "viwx", remap = true, desc = "단어 제거 (inner reg)" },
       ["<Leader>d"] = { "viwd", remap = true, desc = "단어 제거 (del reg)" },
+      ["<Leader>p"] = vim.tbl_get(opts, "_map_sections", "p"),
       ["<Leader>pi"] = { 'viw"_x"iP', desc = "paste from inner clipboard('i')" },
       ["<Leader>pd"] = { 'viw"_x"dP', desc = "paste from deleted" },
       ["<Leader>ps"] = { 'viw"_xP', desc = "paste from system clipboard" },
