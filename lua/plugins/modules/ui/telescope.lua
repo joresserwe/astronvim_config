@@ -11,7 +11,7 @@ return {
     "nvim-telescope/telescope.nvim",
     event = "VeryLazy",
     opts = function(_, config)
-      local astro = require "astrocore"
+
       local telescope = require "telescope"
       local action = require "telescope.actions"
       local fb_action = require "telescope._extensions.file_browser.actions"
@@ -73,9 +73,9 @@ return {
         },
       }
 
-      astro.conditional_func(telescope.load_extension, pcall(require, "import"), "import")
-      astro.conditional_func(telescope.load_extension, pcall(require, "file_browser"), "file_browser")
-      return astro.extend_tbl(config, opts)
+      if pcall(require, "import") then telescope.load_extension("import") end
+      if pcall(require, "file_browser") then telescope.load_extension("file_browser") end
+      return vim.tbl_deep_extend("force", config, opts)
     end,
   },
 }

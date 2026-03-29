@@ -1,6 +1,6 @@
 return {
   "hrsh7th/nvim-cmp",
-  dependependencies = {
+  dependencies = {
     { "js-everts/cmp-tailwind-colors", opts = {} },
   },
   opts = function(_, opts)

@@ -13,9 +13,7 @@ return {
   },
   {
     "stevearc/conform.nvim",
-    opts = {
-      formatters_by_ft = require("lsp.formatting").formatters_by_ft,
-    },
+    opts = require("lsp.formatting").conform_opts,
   },
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
@@ -28,27 +26,27 @@ return {
   {
     "AstroNvim/astrolsp",
     opts = function(_, opts)
-      local extend_tbl = require("astrocore").extend_tbl
+      local extend = function(a, b) return vim.tbl_deep_extend("force", a or {}, b or {}) end
       -- Configuration table of features provided by AstroLSP
-      opts.features = extend_tbl(opts.features, require("lsp.config").features)
+      opts.features = extend(opts.features, require("lsp.config").features)
 
       -- Configuration table of features provided by AstroLSP
-      opts.formatting = extend_tbl(opts.formatting, require("lsp.formatting").formatting)
+      opts.formatting = extend(opts.formatting, require("lsp.formatting").formatting)
 
       -- enable servers that you already have installed without mason
-      opts.servers = extend_tbl(opts.servers, require "lsp.servers")
+      opts.servers = extend(opts.servers, require "lsp.servers")
 
       -- customize how language servers are attached
-      opts.handlers = extend_tbl(opts.handlers, require("lsp.config").handlers)
+      opts.handlers = extend(opts.handlers, require("lsp.config").handlers)
 
       -- customize language server configuration options passed to `lspconfig`
-      opts.config = extend_tbl(opts.config, require("lsp.config").config)
+      opts.config = extend(opts.config, require("lsp.config").config)
 
       -- Configure buffer local auto commands to add when attaching a language server
-      opts.autocmds = extend_tbl(opts.autocmds, require "lsp.autocmds")
+      opts.autocmds = extend(opts.autocmds, require "lsp.autocmds")
 
       -- mappings to be set up on attaching of a language server
-      opts.mappings = extend_tbl(opts.mappings, require "lsp.mappings"(opts))
+      opts.mappings = extend(opts.mappings, require "lsp.mappings"(opts))
 
       -- A custom `on_attach` function to be run after the default `on_attach` function
       opts.on_attach = require "lsp.on_attach"

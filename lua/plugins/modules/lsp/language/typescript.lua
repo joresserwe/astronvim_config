@@ -82,7 +82,7 @@ return {
       if not dap.configurations.javascript then
         dap.configurations.javascript = js_config
       else
-        require("astrocore").extend_tbl(dap.configurations.javascript, js_config)
+        vim.list_extend(dap.configurations.javascript, js_config)
       end
     end,
   },
