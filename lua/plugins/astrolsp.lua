@@ -8,7 +8,7 @@ return {
   {
     "mfussenegger/nvim-lint",
     opts = {
-      linters_by_ft = require("lsp.formatting").linters_by_ft,
+      linters_by_ft = require "lsp.linting",
     },
   },
   {
