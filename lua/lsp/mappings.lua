@@ -24,10 +24,10 @@ return function(opts)
     mappings.v["<Leader>la"] = false
   end
 
-  -- telescope diagnostic
-  local telescope_diagnostic = vim.tbl_get(opts, "mappings", "n", "<Leader>lD")
-  if telescope_diagnostic then
-    mappings.n["<Leader>fd"] = telescope_diagnostic
+  -- diagnostic picker 재할당
+  local diag_picker = vim.tbl_get(opts, "mappings", "n", "<Leader>lD")
+  if diag_picker then
+    mappings.n["<Leader>fd"] = diag_picker
     mappings.n["<Leader>lD"] = false
   end
 
@@ -58,7 +58,7 @@ return function(opts)
     function() require("astrolsp.toggles").buffer_semantic_tokens() end,
     desc = "Toggle LSP semantic highlight (buffer)",
     cond = function(client)
-      return client.supports_method "textDocument/semanticTokens/full" and vim.lsp.semantic_tokens ~= nil
+      return client:supports_method "textDocument/semanticTokens/full" and vim.lsp.semantic_tokens ~= nil
     end,
   }
 

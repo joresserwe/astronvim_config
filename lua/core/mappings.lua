@@ -123,6 +123,14 @@ return function(opts)
   end
 
   ---------------------------------------------------------------------------
+  -- Todo Comments
+  ---------------------------------------------------------------------------
+  if is_available "todo-comments.nvim" and is_available "snacks.nvim" then
+    local todo = function() require("snacks").picker.todo_comments() end
+    mappings.n["<Leader>ft"] = { todo, desc = "Find todos" }
+  end
+
+  ---------------------------------------------------------------------------
   -- NeoTree
   ---------------------------------------------------------------------------
   if is_available "neo-tree.nvim" then
@@ -136,13 +144,6 @@ return function(opts)
       end,
       desc = "Toggle Explorer",
     }
-  end
-
-  ---------------------------------------------------------------------------
-  -- Window Resizer
-  ---------------------------------------------------------------------------
-  if is_available "winresizer" then
-    mappings.n["<C-e>"] = { "<cmd>WinResizerStartResize<cr>", desc = "Start window resize mode" }
   end
 
   ---------------------------------------------------------------------------
@@ -182,17 +183,7 @@ return function(opts)
       desc = "Find history in CWD",
     }
     mappings.n["<Leader>fE"] = { pick "recent", desc = "Find history All Path" }
-    mappings.n["<Leader>fs"] = {
-      function()
-        local aerial_avail, _ = pcall(require, "aerial")
-        if aerial_avail then
-          require("aerial").snacks_picker {}
-        else
-          require("snacks").picker.lsp_symbols()
-        end
-      end,
-      desc = "Search symbols",
-    }
+    mappings.n["<Leader>fs"] = { pick "lsp_symbols", desc = "Search symbols" }
     mappings.n["<Leader>fz"] = { pick "zoxide", desc = "Find directories" }
     mappings.n["<Leader>fu"] = { pick "undo", desc = "Find Undo" }
     mappings.n["<Leader>fl"] = { pick "lines", desc = "Find Lines" }
@@ -201,23 +192,14 @@ return function(opts)
   end
 
   ---------------------------------------------------------------------------
-  -- Telescope
+  -- Session (persistence.nvim)
   ---------------------------------------------------------------------------
-  if is_available "telescope.nvim" and is_available "telescope-import.nvim" then
-    mappings.n["<Leader>fi"] =
-      { function() require("telescope").extensions.import.import {} end, desc = "Open import Browser" }
-  end
-
-  if is_available "telescope-file-browser.nvim" then
-    mappings.n["sf"] =
-      { function() require("telescope").extensions.file_browser.file_browser {} end, desc = "Open File Browser" }
-  end
-
-  ---------------------------------------------------------------------------
-  -- Resession (<Leader>S => <Leader>s)
-  ---------------------------------------------------------------------------
-  if is_available "resession.nvim" then
-    remap_prefix(mappings, "n", "<Leader>S", "<Leader>s", { "l", "s", "S", "t", "d", "D", "f", "F", "." }, "S")
+  if is_available "persistence.nvim" then
+    local persistence = function(method) return function() require("persistence")[method]() end end
+    mappings.n["<Leader>s"] = { desc = get_icon("Session", 1, true) .. "Session" }
+    mappings.n["<Leader>ss"] = { persistence "load", desc = "Load current dir session" }
+    mappings.n["<Leader>sl"] = { persistence "select", desc = "Select session" }
+    mappings.n["<Leader>sd"] = { persistence "stop", desc = "Stop session tracking" }
   end
 
   ---------------------------------------------------------------------------
@@ -247,29 +229,29 @@ return function(opts)
       "d"
     )
 
-    if is_available "nvim-dap-ui" then
-      mappings.n["<Leader>,E"] = vim.tbl_get(opts, "mappings", "n", "<Leader>dE")
-      mappings.v["<Leader>,E"] = vim.tbl_get(opts, "mappings", "v", "<Leader>dE")
-      mappings.n["<Leader>,u"] = vim.tbl_get(opts, "mappings", "n", "<Leader>du")
-      mappings.n["<Leader>,h"] = vim.tbl_get(opts, "mappings", "n", "<Leader>dh")
+    if is_available "nvim-dap-view" then
+      mappings.n["<Leader>,u"] = { "<cmd>DapViewToggle<cr>", desc = "Toggle Debugger UI" }
     end
   end
 
   ---------------------------------------------------------------------------
-  -- Aerial
+  -- Outline
   ---------------------------------------------------------------------------
-  if is_available "aerial.nvim" then
-    mappings.n["sh"] = { function() require("aerial").toggle() end, desc = "Symbols outline(Hierarchy)" }
+  if is_available "outline.nvim" then
+    mappings.n["sh"] = { "<cmd>Outline<CR>", desc = "Symbols outline(Hierarchy)" }
   end
 
   ---------------------------------------------------------------------------
   -- Terminal
   ---------------------------------------------------------------------------
-  if is_available "toggleterm.nvim" then
-    mappings.n["<Leader>t-"] =
-      { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", desc = "ToggleTerm horizontal split" }
-    mappings.n["<Leader>t\\"] = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", desc = "ToggleTerm vertical split" }
-  end
+  mappings.n["<Leader>t-"] = {
+    function() Snacks.terminal.toggle(nil, { win = { position = "bottom", height = 10 } }) end,
+    desc = "Terminal horizontal split",
+  }
+  mappings.n["<Leader>t\\"] = {
+    function() Snacks.terminal.toggle(nil, { win = { position = "right", width = 80 } }) end,
+    desc = "Terminal vertical split",
+  }
 
   ---------------------------------------------------------------------------
   -- AutoSave
@@ -281,8 +263,9 @@ return function(opts)
   ---------------------------------------------------------------------------
   -- Windows
   ---------------------------------------------------------------------------
-  if is_available "windows.nvim" then
-    mappings.n["<Leader>m"] = { "<cmd>WindowsMaximize<cr>", desc = "Maximize Pane" }
+  if is_available "focus.nvim" then
+    mappings.n["<Leader>m"] = { "<cmd>FocusMaxOrEqual<cr>", desc = "Toggle Maximize Pane" }
+    mappings.n["<Leader>uR"] = { "<cmd>FocusToggle<cr>", desc = "Toggle Focus Autoresize" }
   end
 
   ---------------------------------------------------------------------------
