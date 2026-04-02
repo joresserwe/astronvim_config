@@ -1,6 +1,5 @@
 ---@type LazySpec
 return {
-  { "jay-babu/mason-null-ls.nvim", optional = true, opts = { methods = { diagnostics = false } } },
   {
     "mfussenegger/nvim-lint",
     event = "User AstroFile",

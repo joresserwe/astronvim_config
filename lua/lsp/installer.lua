@@ -8,7 +8,7 @@ M.mason = function(_, opts)
     "js-debug-adapter",
     "lua-language-server",
     "stylua",
-    "typescript-language-server",
+    "vtsls",
     "tailwindcss-language-server",
     "html-lsp",
     "css-lsp",
@@ -23,7 +23,7 @@ M.mason = function(_, opts)
     "marksman",
     "mdformat",
     "json-lsp",
-    -- "biome"
+
   })
 end
 

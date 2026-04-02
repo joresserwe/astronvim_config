@@ -2,7 +2,7 @@ local M = {}
 
 -- Configuration table of features provided by AstroLSP
 M.features = {
-  codelens = true, -- enable/disable codelens refresh on start
+  codelens = false, -- enable/disable codelens refresh on start
   inlay_hints = true, -- enable/disable inlay hints on start
   semantic_tokens = true, -- enable/disable semantic token highlighting
 }
@@ -19,35 +19,7 @@ M.handlers = {
 
 -- customize language server configuration options passed to `lspconfig`
 M.config = {
-  biome = {
-    filetypes = {
-      "javascript",
-      "javascriptreact",
-      "typescript",
-      "typescriptreact",
-      "vue",
-      "json",
-      "jsonc",
-    },
-    root_dir = require("lspconfig").util.root_pattern("biome.json", "biome.jsonc", ".git"),
-    single_file_support = false,
-    settings = {
-    biome = {
-      -- formatter와 linter 모두 활성화
-      enabled = true,
-      formatter = {
-        enabled = true,
-      },
-      linter = {
-        enabled = true,
-      },
-      -- 파일 저장 시 자동 수정
-      codeActions = {
-        enabled = true,
-      }
-    }
-  },
-  },
+  
   lua_ls = {
     settings = {
       Lua = {
@@ -58,30 +30,44 @@ M.config = {
       },
     },
   },
-  ts_ls = {
-    on_attach = function(client, bufnr) end,
+  vtsls = {
     settings = {
-      -- specify some or all of the following settings if you want to adjust the default behavior
       javascript = {
         inlayHints = {
-          includeInlayEnumMemberValueHints = true,
-          includeInlayFunctionLikeReturnTypeHints = true,
-          includeInlayFunctionParameterTypeHints = true,
-          includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
-          includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-          includeInlayPropertyDeclarationTypeHints = true,
-          includeInlayVariableTypeHints = true,
+          parameterNames = { enabled = "literals" },
+          functionLikeReturnTypes = { enabled = true },
+          enumMemberValues = { enabled = true },
+          parameterTypes = { enabled = false },
+          variableTypes = { enabled = false },
+          propertyDeclarationTypes = { enabled = false },
         },
+        suggest = {
+          completeFunctionCalls = true,
+        },
+        updateImportsOnFileMove = { enabled = "always" },
       },
       typescript = {
         inlayHints = {
-          includeInlayEnumMemberValueHints = true,
-          includeInlayFunctionLikeReturnTypeHints = true, -- Return 타입
-          includeInlayFunctionParameterTypeHints = true, -- Parameter 타입
-          includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
-          includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-          includeInlayPropertyDeclarationTypeHints = true,
-          includeInlayVariableTypeHints = true,
+          parameterNames = { enabled = "literals" },
+          functionLikeReturnTypes = { enabled = true },
+          enumMemberValues = { enabled = true },
+          parameterTypes = { enabled = false },
+          variableTypes = { enabled = false },
+          propertyDeclarationTypes = { enabled = false },
+        },
+        suggest = {
+          completeFunctionCalls = true,
+        },
+        updateImportsOnFileMove = { enabled = "always" },
+      },
+      vtsls = {
+        autoUseWorkspaceTsdk = true,
+        enableMoveToFileCodeAction = true,
+        experimental = {
+          maxInlayHintLength = 30,
+          completion = {
+            enableServerSideFuzzyMatch = true,
+          },
         },
       },
     },
