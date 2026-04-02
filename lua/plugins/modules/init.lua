@@ -1,7 +1,6 @@
 local M = {}
 
 local exclude = {
-  "lsp.cmp", -- Specific module to exclude (e.g., plugins/module/lsp/cmp.lua)
   "ui.dashboard",
   "utils.kitty",
   "utils.molten",
