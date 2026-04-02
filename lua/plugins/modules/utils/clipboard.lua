@@ -1,17 +1,16 @@
-local is_windows = jit.os:find "Windows"
 return {
   {
     "gbprod/yanky.nvim",
     dependencies = {
-      { "kkharji/sqlite.lua", enabled = not is_windows },
       { "folke/snacks.nvim" },
     },
-    opts = function(_, opts)
-      opts = vim.tbl_deep_extend("force", opts, {
-        highlight = { timer = 200 },
-        ring = { storage = is_windows and "shada" or "sqlite" },
-      })
-    end,
+    opts = {
+      highlight = { timer = 200 },
+      ring = { storage = "shada" },
+    },
+    keys = {
+      { "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank (yanky)" },
+    },
   },
   {
     "folke/snacks.nvim",
