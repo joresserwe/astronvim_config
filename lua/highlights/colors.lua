@@ -22,6 +22,11 @@ return {
   ---@param bg string
   highlights = function(c, bg)
     return {
+      -- 줄번호
+      LineNr = { fg = require("highlights.palette").dim_gray },
+      LineNrAbove = { fg = require("highlights.palette").dim_gray },
+      LineNrBelow = { fg = require("highlights.palette").dim_gray },
+
       -- 배경
       Normal = { bg = bg },
       NormalNC = { bg = bg },

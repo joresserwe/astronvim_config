@@ -24,6 +24,9 @@ return {
     -- Mappings can be configured through AstroCore as well.
     opts.mappings = extend(opts.mappings, require "core.mappings"(opts))
 
+    -- User commands
+    opts.commands = extend(opts.commands, require "core.commands")
+
     -- Configure buffer local auto commands
     opts.autocmds = extend(opts.autocmds, require "core.autocmds")
   end,
