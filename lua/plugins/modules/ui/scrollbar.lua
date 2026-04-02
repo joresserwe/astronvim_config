@@ -1,38 +1,23 @@
 return {
   {
-    "petertriho/nvim-scrollbar",
+    "lewis6991/satellite.nvim",
+    event = "VeryLazy",
     opts = {
-      handle = {
-        color = require("highlights").scrollbar,
-        blend = 60,
-      },
-      handlers = {
-        gitsigns = require("astrocore").is_available "gitsigns.nvim",
-        search = require("astrocore").is_available "nvim-hlslens",
-        ale = require("astrocore").is_available "ale",
-      },
+      winblend = 60,
       excluded_filetypes = {
         "dropbar_menu",
         "dropbar_menu_fzf",
         "DressingInput",
-        "cmp_docs",
-        "cmp_menu",
         "noice",
         "prompt",
-        "TelescopePrompt",
       },
-    },
-    event = "VeryLazy",
-  },
-  {
-    "saghen/blink.cmp",
-    ---@module "blink.cmp"
-    ---@type blink.cmp.Config
-    opts = {
-      completion = {
-        menu = {
-          scrollbar = false,
-        },
+      handlers = {
+        cursor = { enable = true },
+        search = { enable = true },
+        diagnostic = { enable = true },
+        gitsigns = { enable = true },
+        marks = { enable = true },
+        quickfix = { enable = true },
       },
     },
   },

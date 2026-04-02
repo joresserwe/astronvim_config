@@ -54,8 +54,8 @@ return {
         ignore_focus = {
           "qf",
           "neo-tree",
-          "toggleterm",
-          "telescopePrompt",
+          "snacks_terminal",
+          "snacks_picker_input",
           "mason",
           "lazy",
           "newtr",
