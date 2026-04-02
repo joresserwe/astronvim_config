@@ -3,7 +3,7 @@ local M = {}
 -- Configure core features of AstroNvim
 M.features = {
   large_buf = { size = 1024 * 256, lines = 10000 }, -- set global limits for large files for disabling features like treesitter
-  autopairs = true, -- enable autopairs at start
+  autopairs = false, -- blink.pairs 사용
   cmp = true, -- enable completion at start
   -- diagnostics = { virtual_text = true, virtual_lines = false }, -- diagnostic settings on startup
   -- diagnostics_mode = 3, -- diagnostic mode on start (0 = off, 1 = no signs/virtual text, 2 = no virtual text, 3 = on)
@@ -36,7 +36,7 @@ M.filetypes = {
     -- foo = "fooscript",
   },
   filename = {
-    ["biome.json"] = "jsonc",
+
   },
   pattern = {
     -- [".*/etc/foo/.*"] = "fooscript",
