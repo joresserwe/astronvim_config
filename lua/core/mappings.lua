@@ -188,6 +188,7 @@ return function(opts)
       return function() require("snacks").picker[name](picker_opts or {}) end
     end
 
+    mappings.n["fd"] = { pick "diagnostics", desc = "Search diagnostics" }
     mappings.n["<Leader>f`"] = { pick "marks", desc = "Find marks" }
     mappings.n["<Leader>f'"] = { pick "registers", desc = "Find registers" }
     mappings.n["<Leader>f/"] = { pick "grep", desc = "Find words" }
@@ -344,7 +345,7 @@ return function(opts)
     -- Finder (재할당 또는 미사용)
     "<Leader>fb", "<Leader>fo", "<Leader>fO", "<Leader>fr", "<Leader>fw", "<Leader>fW",
     -- LSP
-    "<Leader>lS", "<Leader>ls",
+    "<Leader>lD", "<Leader>lS", "<Leader>ls",
     -- Plugins (=> <Leader>' 로 이동)
     "<Leader>pa", "<Leader>pm", "<Leader>pM", "<Leader>pS", "<Leader>pu", "<Leader>pU",
     -- Terminal
