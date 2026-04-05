@@ -38,6 +38,9 @@ tags
 package.json
 package-lock.json
 
+# Build artifacts
+build/
+
 # Claude Code
 CLAUDE.md
 .claude/

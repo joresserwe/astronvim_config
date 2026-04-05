@@ -21,7 +21,12 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
     opts = require("lsp.installer").treesitter,
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    branch = "main",
   },
   {
     "AstroNvim/astrolsp",
