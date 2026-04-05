@@ -254,6 +254,27 @@ return function(opts)
   }
 
   ---------------------------------------------------------------------------
+  -- AI 통합 (<Leader>a)
+  ---------------------------------------------------------------------------
+  mappings.n["<Leader>a"] = { desc = get_icon("ActiveLSP", 1, true) .. "AI" }
+
+  -- Claude Code (외부 pane + IDE 통합)
+  local claude_pane = require("plugins.modules.editing-support.ai.claude-pane")
+  if claude_pane.is_available() then
+    mappings.n["<Leader>ac"] = { claude_pane.toggle, desc = "Toggle Claude Code" }
+  end
+  if is_available "claudecode.nvim" then
+    mappings.n["<Leader>as"] = { "<cmd>ClaudeCodeSend<cr>", desc = "Send to Claude Code" }
+    mappings.x["<Leader>as"] = { "<cmd>ClaudeCodeSend<cr>", desc = "Send to Claude Code" }
+    mappings.n["<Leader>ab"] = { "<cmd>ClaudeCodeAdd %<cr>", desc = "Add buffer to Claude" }
+    mappings.n["<Leader>aa"] = { "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" }
+    mappings.n["<Leader>ad"] = { "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" }
+    mappings.n["<Leader>ar"] = { "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" }
+    mappings.n["<Leader>am"] = { "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select model" }
+  end
+
+
+  ---------------------------------------------------------------------------
   -- AutoSave
   ---------------------------------------------------------------------------
   if is_available "auto-save.nvim" then
