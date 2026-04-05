@@ -20,15 +20,6 @@ return {
     opts = require("lsp.installer").mason,
   },
   {
-    "nvim-treesitter/nvim-treesitter",
-    branch = "main",
-    opts = require("lsp.installer").treesitter,
-  },
-  {
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    branch = "main",
-  },
-  {
     "AstroNvim/astrolsp",
     opts = function(_, opts)
       local extend = function(a, b) return vim.tbl_deep_extend("force", a or {}, b or {}) end
