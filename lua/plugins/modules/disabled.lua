@@ -1,7 +1,6 @@
 -- AstroNvim 기본 플러그인 비활성화 목록
 return {
   { "rebelot/heirline.nvim", enabled = false },
-  { "folke/neoconf.nvim", enabled = false },
   { "nvimtools/none-ls.nvim", enabled = false },
   { "jay-babu/mason-null-ls.nvim", enabled = false },
   { "hrsh7th/nvim-cmp", enabled = false },
