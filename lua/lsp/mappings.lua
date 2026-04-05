@@ -1,7 +1,8 @@
 return function(opts)
-  local astro = require "astrocore"
-  local is_available = astro.is_available
-  local mappings = astro.empty_map_table()
+  local is_available = function(plugin)
+    return require("lazy.core.config").spec.plugins[plugin] ~= nil
+  end
+  local mappings = { [""] = {}, n = {}, v = {}, x = {}, i = {}, t = {}, o = {}, s = {} }
 
   mappings.i["<>"] = {
     "<></><left><left><left>",

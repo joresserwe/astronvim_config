@@ -1,10 +1,20 @@
 ---@param opts AstroCoreOpts
 return function(opts)
-  local astro = require "astrocore"
-
-  local is_available = astro.is_available
+  local is_available = function(plugin)
+    return require("lazy.core.config").spec.plugins[plugin] ~= nil
+  end
   local buffer = require "astrocore.buffer"
-  local get_icon = require("astroui").get_icon
+  local get_icon = function(name, padding, no_fallback)
+    local icons = {
+      Window = "󰖮",
+      Paste = "󰅌",
+      Session = "",
+      ActiveLSP = "",
+    }
+    local icon = icons[name] or (no_fallback and "" or "?")
+    if padding and padding > 0 then icon = icon .. string.rep(" ", padding) end
+    return icon
+  end
 
   --- AstroNvim 기본 매핑을 새 prefix로 일괄 재할당
   ---@param tbl table mappings table
@@ -36,7 +46,7 @@ return function(opts)
   ---------------------------------------------------------------------------
   -- 기본 매핑
   ---------------------------------------------------------------------------
-  local mappings = vim.tbl_deep_extend("force", astro.empty_map_table(), {
+  local mappings = vim.tbl_deep_extend("force", { [""] = {}, n = {}, v = {}, x = {}, i = {}, t = {}, o = {}, s = {} }, {
     [""] = {
       ["("] = { "7k", desc = "7줄 위로" },
       [")"] = { "7j", desc = "7줄 아래로" },

@@ -30,7 +30,7 @@ return {
         ctx.dirname = vim.fn.fnamemodify(ctx.filename, ":h")
         local linters = valid_linters(ctx, orig_resolve_linter_by_ft(...))
         if not linters[1] then linters = valid_linters(ctx, lint.linters_by_ft["_"]) end -- fallback
-        require("astrocore").list_insert_unique(linters, valid_linters(ctx, lint.linters_by_ft["*"])) -- global
+        vim.list_extend(linters, valid_linters(ctx, lint.linters_by_ft["*"])) -- global
         return linters
       end
 
