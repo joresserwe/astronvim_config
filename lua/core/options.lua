@@ -24,6 +24,16 @@ M.options = {
     signcolumn = "yes", -- sets vim.opt.signcolumn to yes
     wrap = false, -- sets vim.opt.wrap
     foldcolumn = "0", -- fold 레벨 숫자 표시 비활성화
+    -- 한글 2벌식 langmap: 노멀모드에서 한글 입력 시 영문 키로 인식
+    langmap = table.concat({
+      -- 일반 (ㅂ=q ~ ㅔ=p, ㅁ=a ~ ㅣ=l, ㅋ=z ~ ㅡ=m)
+      "ㅂq", "ㅈw", "ㄷe", "ㄱr", "ㅅt", "ㅛy", "ㅕu", "ㅑi", "ㅐo", "ㅔp",
+      "ㅁa", "ㄴs", "ㅇd", "ㄹf", "ㅎg", "ㅗh", "ㅓj", "ㅏk", "ㅣl",
+      "ㅋz", "ㅌx", "ㅊc", "ㅍv", "ㅠb", "ㅜn", "ㅡm",
+      -- Shift (쌍자음 + ㅒㅖ)
+      "ㅃQ", "ㅉW", "ㄸE", "ㄲR", "ㅆT", "ㅒO", "ㅖP",
+    }, ","),
+    langremap = false, -- langmap이 매핑 RHS에 영향주지 않도록
   },
   g = {
     autoformat = false,

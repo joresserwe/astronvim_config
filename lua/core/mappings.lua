@@ -90,11 +90,19 @@ return function(opts)
 
       ["<Leader>w"] = {
         function()
-          local bufs = vim.fn.getbufinfo { buflisted = true }
-          buffer.close(0)
-          if is_available "alpha-nvim" and not bufs[2] then require("alpha").start(true) end
+          local buf = vim.api.nvim_get_current_buf()
+          local wins = vim.fn.win_findbuf(buf)
+          if #wins > 1 then
+            -- 같은 버퍼가 다른 창에도 열려있으면 윈도우만 닫기
+            vim.cmd "close"
+          else
+            -- 이 창이 마지막이면 버퍼도 함께 정리
+            buffer.close(0)
+            local bufs = vim.fn.getbufinfo { buflisted = true }
+            if is_available "alpha-nvim" and not bufs[1] then require("alpha").start(true) end
+          end
         end,
-        desc = "Close buffer",
+        desc = "Close window (버퍼는 다른 창에 없을 때만 정리)",
       },
 
       -- surround
@@ -292,10 +300,7 @@ return function(opts)
   ---------------------------------------------------------------------------
   -- Windows
   ---------------------------------------------------------------------------
-  if is_available "focus.nvim" then
-    mappings.n["<Leader>m"] = { "<cmd>FocusMaxOrEqual<cr>", desc = "Toggle Maximize Pane" }
-    mappings.n["<Leader>uR"] = { "<cmd>FocusToggle<cr>", desc = "Toggle Focus Autoresize" }
-  end
+
 
   ---------------------------------------------------------------------------
   -- Conform (Formatting)
