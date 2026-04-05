@@ -4,6 +4,8 @@ local exclude = {
   "ui.dashboard",
   "utils.kitty",
   "utils.molten",
+  "editing-support.ai.providers",
+  "editing-support.ai.claude-pane",
 }
 
 -- Normalize paths for cross-platform compatibility
