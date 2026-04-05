@@ -9,12 +9,9 @@ M.features = {
 
 -- customize how language servers are attached
 M.handlers = {
-  -- a function without a key is simply the default handler, functions take two parameters, the server name and the configured options table for that server
-  -- function(server, opts) require("lspconfig")[server].setup(opts) end
-
-  -- the key is the server that is being setup with `lspconfig`
-  -- rust_analyzer = false, -- setting a handler to false will disable the set up of that language server
-  -- pyright = function(_, opts) require("lspconfig").pyright.setup(opts) end -- or a custom handler function can be passed
+  -- v6: default handler는 ["*"] = function(server) vim.lsp.enable(server) end
+  -- rust_analyzer = false, -- false면 해당 서버 비활성화
+  -- pyright = function(server) vim.lsp.enable(server) end -- 커스텀 핸들러
 }
 
 -- customize language server configuration options passed to `lspconfig`

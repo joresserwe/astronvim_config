@@ -151,7 +151,8 @@ return {
         optional = true,
         opts = function(_, opts)
           opts.capabilities = require("blink.cmp").get_lsp_capabilities(opts.capabilities)
-          local blink_opts = require("astrocore").plugin_opts "blink.cmp"
+          local blink_spec = require("lazy.core.config").spec.plugins["blink.cmp"]
+          local blink_opts = blink_spec and require("lazy.core.plugin").values(blink_spec, "opts") or {}
           if vim.tbl_get(blink_opts, "signature", "enabled") == true then
             if not opts.features then opts.features = {} end
             opts.features.signature_help = false
