@@ -76,8 +76,7 @@ return function(opts)
       ["<Leader><CR>"] = { "i<CR><ESC>k", desc = "현재 커서 위치에서 줄바꿈" },
 
       ["s"] = vim.tbl_get(opts, "_map_sections", "s"),
-      ["sq"] = { "<cmd>botright copen<cr>", desc = "Open Quickfix" },
-      ["sd"] = vim.tbl_get(opts, "mappings", "n", "gl"),
+      ["sq"] = { "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix (Trouble)" },
 
       -- Prevent conflict <C-i> and <Tab>
       ["<C-p>"] = { "<C-o>", desc = "Jumplist back" },
@@ -189,6 +188,14 @@ return function(opts)
     mappings.n["<Leader>fl"] = { pick "lines", desc = "Find Lines" }
 
     mappings.n["su"] = { pick "undo", desc = "Find Undo" }
+  end
+
+  ---------------------------------------------------------------------------
+  -- Trouble
+  ---------------------------------------------------------------------------
+  if is_available "trouble.nvim" then
+    mappings.n["sd"] = { "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)" }
+    mappings.n["sD"] = { "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics (Trouble)" }
   end
 
   ---------------------------------------------------------------------------
@@ -305,6 +312,7 @@ return function(opts)
   ---------------------------------------------------------------------------
   mappings.n["|"] = false
   mappings.n["\\"] = false
+  mappings[""]["s"] = "<Nop>"
   mappings.n["p"] = "<Nop>"
   mappings.n["P"] = "<Nop>"
 

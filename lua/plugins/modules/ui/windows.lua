@@ -1,34 +1,33 @@
 ---@type LazySpec
 return {
-  "nvim-focus/focus.nvim",
-  event = "VeryLazy",
-  config = function()
-    vim.opt.equalalways = false
-    vim.opt.splitkeep = "cursor"
-    require("focus").setup()
+  -- 수동 리사이즈: <C-w>r 로 resize 모드 진입, hjkl 로 조절
+  {
+    "mrjones2014/smart-splits.nvim",
+    event = "VeryLazy",
+    dependencies = { "pogyomo/submode.nvim" },
+    config = function()
+      require("smart-splits").setup()
 
-    -- neo-tree, Avante 등 특수 창에서 자동 리사이즈 비활성화
-    local ignore_filetypes = { "neo-tree", "Avante", "AvanteSelectedFiles", "AvanteInput", "codecompanion" }
-    local ignore_buftypes = { "nofile", "prompt", "popup" }
+      local submode = require "submode"
+      -- <C-w>r 또는 <C-w><C-r> 로 resize 모드 진입
+      vim.keymap.set("n", "<C-w><C-r>", "<C-w>r", { remap = true, desc = "Resize mode" })
 
-    local augroup = vim.api.nvim_create_augroup("FocusDisable", { clear = true })
-    vim.api.nvim_create_autocmd("FileType", {
-      group = augroup,
-      callback = function()
-        if vim.tbl_contains(ignore_filetypes, vim.bo.filetype) then
-          vim.b.focus_disable = true
-        end
-      end,
-      desc = "Disable focus autoresize for special filetypes",
-    })
-    vim.api.nvim_create_autocmd("BufEnter", {
-      group = augroup,
-      callback = function()
-        if vim.tbl_contains(ignore_buftypes, vim.bo.buftype) then
-          vim.w.focus_disable = true
-        end
-      end,
-      desc = "Disable focus autoresize for special buftypes",
-    })
-  end,
+      submode.create("WinResize", {
+        mode = "n",
+        enter = "<C-w>r",
+        desc = "Resize mode",
+        leave = { "<Esc>", "q", "<C-c>" },
+        hook = {
+          on_enter = function() vim.notify "Resize mode: h/j/k/l to resize, <Esc> to exit" end,
+          on_leave = function() vim.notify "" end,
+        },
+        default = function(register)
+          register("h", require("smart-splits").resize_left, { desc = "Resize left" })
+          register("j", require("smart-splits").resize_down, { desc = "Resize down" })
+          register("k", require("smart-splits").resize_up, { desc = "Resize up" })
+          register("l", require("smart-splits").resize_right, { desc = "Resize right" })
+        end,
+      })
+    end,
+  },
 }
