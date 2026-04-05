@@ -3,7 +3,7 @@ return {
   {
     "mfussenegger/nvim-lint",
     event = "User AstroFile",
-    dependencies = { "williamboman/mason.nvim" },
+    dependencies = { "mason-org/mason.nvim" },
     opts = {},
     config = function(_, opts)
       local lint = require "lint"

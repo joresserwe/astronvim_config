@@ -63,7 +63,7 @@ end
 
 return {
   {
-    "Saghen/blink.cmp",
+    "saghen/blink.cmp",
     event = { "InsertEnter", "CmdlineEnter" },
     version = "^1",
     dependencies = {
@@ -163,7 +163,7 @@ return {
         optional = true,
         specs = {
           {
-            "Saghen/blink.cmp",
+            "saghen/blink.cmp",
             opts = function(_, opts)
               if pcall(require, "lazydev.integrations.blink") then
                 return vim.tbl_deep_extend("force", opts, {
