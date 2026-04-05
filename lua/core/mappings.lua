@@ -182,7 +182,8 @@ return function(opts)
       desc = "Find history in CWD",
     }
     mappings.n["<Leader>fE"] = { pick "recent", desc = "Find history All Path" }
-    mappings.n["<Leader>fs"] = { pick "lsp_symbols", desc = "Search symbols" }
+    mappings.n["<Leader>fs"] = { "<cmd>Namu symbols<cr>", desc = "Search symbols (Namu)" }
+    mappings.n["<Leader>fS"] = { pick "lsp_symbols", desc = "Search symbols (Snacks)" }
     mappings.n["<Leader>fz"] = { pick "zoxide", desc = "Find directories" }
     mappings.n["<Leader>fu"] = { pick "undo", desc = "Find Undo" }
     mappings.n["<Leader>fl"] = { pick "lines", desc = "Find Lines" }
