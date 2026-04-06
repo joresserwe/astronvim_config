@@ -72,6 +72,7 @@ local function resolve()
     unfocused = user.unfocused or blend(p.fg, 0.5, inactive),
     danger = user.danger or p.error,
     scrollbar = user.scrollbar or p.accent,
+    winsep = user.winsep or p.accent,
   }
   return _cache
 end

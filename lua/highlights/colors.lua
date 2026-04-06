@@ -16,6 +16,7 @@ return {
   unfocused = nil, -- 포커스 없는 요소
   danger = require("highlights.palette").crimson, -- 비포커스 indicator
   scrollbar = require("highlights.palette").slate_blue, -- scrollbar handle
+  winsep = nil, -- 활성 창 구분선 (colorful-winsep)
 
   --- highlight group 정의 (c: resolve된 시맨틱 색상, bg: 투명 처리된 배경)
   ---@param c table
@@ -67,6 +68,12 @@ return {
       BufferLineModified = { bg = NONE },
       BufferLineModifiedSelected = { bg = NONE },
       BufferLineModifiedVisible = { bg = NONE },
+
+      -- Scrollbar
+      SatelliteBar = { bg = c.scrollbar },
+
+      -- 활성 창 구분선
+      ColorfulWinSep = { fg = c.winsep },
 
       -- BufferLine: visible 탭 진단 표시
       BufferLineHintVisible = { fg = c.unfocused },
