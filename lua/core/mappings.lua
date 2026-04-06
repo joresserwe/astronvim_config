@@ -288,7 +288,7 @@ return function(opts)
   -- Claude Code (외부 pane + IDE 통합)
   local claude_pane = require("plugins.modules.editing-support.ai.claude-pane")
   if claude_pane.is_available() then
-    mappings.n["<Leader>ac"] = { claude_pane.toggle, desc = "Toggle Claude Code" }
+    mappings.n["<Leader>ac"] = { claude_pane.open, desc = "Open Claude Code pane" }
   end
   if is_available "claudecode.nvim" then
     mappings.n["<Leader>as"] = { "<cmd>ClaudeCodeSend<cr>", desc = "Send to Claude Code" }
@@ -307,6 +307,23 @@ return function(opts)
   if is_available "auto-save.nvim" then
     mappings.n["<Leader>uA"] = { "<cmd>ASToggle<cr>", desc = "Toggle Autosave" }
   end
+
+  ---------------------------------------------------------------------------
+  -- Focus
+  ---------------------------------------------------------------------------
+  mappings.n["<Leader>m"] = {
+    function()
+      local cur = vim.api.nvim_get_current_win()
+      if vim.g.maximised_win == cur then
+        vim.cmd "wincmd ="
+        vim.g.maximised_win = nil
+      else
+        vim.cmd "wincmd _ | wincmd |"
+        vim.g.maximised_win = cur
+      end
+    end,
+    desc = "Maximize/equalize window",
+  }
 
   ---------------------------------------------------------------------------
   -- Windows

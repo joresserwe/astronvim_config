@@ -23,6 +23,7 @@ M.options = {
     spell = false, -- sets vim.opt.spell
     signcolumn = "yes", -- sets vim.opt.signcolumn to yes
     wrap = false, -- sets vim.opt.wrap
+    winminwidth = 10, -- 최대화 시 다른 창 최소 너비
     foldcolumn = "0", -- fold 레벨 숫자 표시 비활성화
     -- 한글 2벌식 langmap: 노멀모드에서 한글 입력 시 영문 키로 인식
     langmap = table.concat({
