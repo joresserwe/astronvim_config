@@ -6,8 +6,18 @@ return {
   event = "VeryLazy",
   opts = {
     terminal = {
-      split_side = "right",
-      split_width_percentage = 0.35,
+      provider = "external",
+      provider_opts = {
+        external_terminal_cmd = function(cmd_string, env_table)
+          return require("plugins.modules.editing-support.ai.claude-pane").external_cmd(cmd_string, env_table)
+        end,
+      },
+    },
+    models = {
+      { name = "Claude Opus 4.6 (Latest)", value = "opus" },
+      { name = "Claude Sonnet 4.6 (Latest)", value = "sonnet" },
+      { name = "Opusplan: Opus 4.6 + Sonnet 4.6", value = "opusplan" },
+      { name = "Claude Haiku 4.5", value = "haiku" },
     },
     diff_opts = {
       auto_close_on_accept = true,

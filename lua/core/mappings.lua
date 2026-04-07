@@ -291,7 +291,6 @@ return function(opts)
     mappings.n["<Leader>ac"] = { claude_pane.open, desc = "Open Claude Code pane" }
   end
   if is_available "claudecode.nvim" then
-    mappings.n["<Leader>as"] = { "<cmd>ClaudeCodeSend<cr>", desc = "Send to Claude Code" }
     mappings.x["<Leader>as"] = { "<cmd>ClaudeCodeSend<cr>", desc = "Send to Claude Code" }
     mappings.n["<Leader>ab"] = { "<cmd>ClaudeCodeAdd %<cr>", desc = "Add buffer to Claude" }
     mappings.n["<Leader>aa"] = { "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" }
