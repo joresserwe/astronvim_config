@@ -42,5 +42,4 @@ package-lock.json
 build/
 
 # Claude Code
-CLAUDE.md
 .claude/
