@@ -141,7 +141,6 @@ All configured with transparent backgrounds.
 | **persistence.nvim** | Session save / restore |
 | **yanky.nvim** | Yank history with picker |
 | **im-select.nvim** | Auto input method switching (macOS) |
-| **molten.nvim** | Jupyter notebook support |
 | **diffview.nvim** | Git diff viewer |
 
 ---

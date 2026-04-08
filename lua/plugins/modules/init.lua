@@ -2,8 +2,6 @@ local M = {}
 
 local exclude = {
   "ui.dashboard",
-  "utils.kitty",
-  "utils.molten",
   "editing-support.ai.providers",
   "editing-support.ai.claude-pane",
 }
