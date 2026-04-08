@@ -1,6 +1,8 @@
 -- 외부 터미널 pane에서 Claude CLI 직접 실행 (wezterm > tmux)
 -- claudecode.nvim의 external provider도 이 모듈을 통해 동일한 pane 분할 로직을 재사용한다.
 -- nvim 종료 시 생성된 pane을 자동으로 정리한다.
+local platform = require "core.platform"
+
 local M = {}
 
 ---@type string[]
@@ -59,7 +61,7 @@ local function build_split_cmd(shell_cmd, env_table)
         table.insert(cmd, k .. "=" .. v)
       end
     end
-    vim.list_extend(cmd, { "--", "bash", "-lc", shell_cmd })
+    vim.list_extend(cmd, { "--", platform.shell, "-lc", shell_cmd })
     return cmd
   else
     local cmd = { "tmux", "split-window", dir, "-l", percent .. "%", "-P", "-F", "#{pane_id}", "-t", target }
