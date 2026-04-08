@@ -5,6 +5,7 @@
   <a href="https://github.com/AstroNvim/AstroNvim"><img alt="AstroNvim" src="https://img.shields.io/badge/AstroNvim-v6-7DC4E4?style=flat" /></a>
   <a href="https://github.com/folke/lazy.nvim"><img alt="lazy.nvim" src="https://img.shields.io/badge/lazy.nvim-plugin%20manager-B7BDF8?style=flat" /></a>
   <img alt="macOS" src="https://img.shields.io/badge/macOS-000000?style=flat&logo=apple&logoColor=white" />
+  <img alt="WSL2" src="https://img.shields.io/badge/WSL2-4D4D4D?style=flat&logo=linux&logoColor=white" />
 </p>
 
 <p align="center">
