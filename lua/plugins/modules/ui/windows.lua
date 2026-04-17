@@ -6,7 +6,11 @@ return {
     event = "VeryLazy",
     dependencies = { "pogyomo/submode.nvim" },
     config = function()
-      require("smart-splits").setup()
+      require("smart-splits").setup {
+        -- wezterm.lua 의 is_vim() + ActivatePaneDirection 이 nvim↔pane 전환을 처리하므로
+        -- mux 통합 비활성화 (WSL 에서 wezterm.exe cli 동기 호출 지연 방지)
+        multiplexer_integration = false,
+      }
 
       local submode = require "submode"
       -- <C-w>r 또는 <C-w><C-r> 로 resize 모드 진입

@@ -21,7 +21,10 @@ M.is_wsl = M.is_linux
 M.shell = vim.env.SHELL or "/bin/sh"
 
 -- 터미널 멀티플렉서
+-- WSL 도메인에서는 WEZTERM_PANE이 전달되지 않으므로 TERM_PROGRAM으로도 감지.
+-- 환경에 따라 TERM_PROGRAM 값이 "WezTerm"/"wezterm"/"WEZ_TERM" 등으로 달라질 수 있어 substring 매칭.
 M.in_wezterm = vim.env.WEZTERM_PANE ~= nil
+  or ((vim.env.TERM_PROGRAM or ""):lower():find "wez") ~= nil
 M.in_tmux = vim.env.TMUX ~= nil
 
 --- 실행 파일이 PATH에 있는지 확인

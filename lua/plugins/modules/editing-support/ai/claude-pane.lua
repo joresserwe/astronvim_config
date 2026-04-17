@@ -8,14 +8,37 @@ local M = {}
 ---@type string[]
 local pane_ids = {}
 
--- 현재 실행 중인 터미널 멀티플렉서 감지
-local backend, nvim_pane
-if vim.env.WEZTERM_PANE then
-  backend = "wezterm"
-  nvim_pane = vim.env.WEZTERM_PANE
-elseif vim.env.TMUX then
-  backend = "tmux"
-  nvim_pane = vim.env.TMUX_PANE or vim.trim(vim.fn.system("tmux display-message -p '#{pane_id}'"))
+-- lazy init: 첫 사용 시점까지 외부 명령 호출을 지연
+local _initialized = false
+local wezterm_bin, backend, nvim_pane
+
+local function ensure_init()
+  if _initialized then return end
+  _initialized = true
+
+  wezterm_bin = (platform.is_wsl and vim.fn.executable("wezterm.exe") == 1) and "wezterm.exe" or "wezterm"
+
+  if platform.in_wezterm then
+    backend = "wezterm"
+    -- wezterm pane id 감지
+    if vim.env.WEZTERM_PANE then
+      nvim_pane = vim.env.WEZTERM_PANE
+    else
+      local info = vim.fn.system(wezterm_bin .. " cli list --format json 2>/dev/null")
+      local ok, panes = pcall(vim.json.decode, info)
+      if ok then
+        for _, p in ipairs(panes) do
+          if p.is_active then
+            nvim_pane = tostring(p.pane_id)
+            break
+          end
+        end
+      end
+    end
+  elseif vim.env.TMUX then
+    backend = "tmux"
+    nvim_pane = vim.env.TMUX_PANE or vim.trim(vim.fn.system("tmux display-message -p '#{pane_id}'"))
+  end
 end
 
 --- 주어진 pane의 cols/rows를 구해 분할 방향 결정 (셀 종횡비 2.2x 보정)
@@ -24,7 +47,7 @@ end
 local function smart_dir(target)
   local cols, rows
   if backend == "wezterm" then
-    local info = vim.fn.system("wezterm cli list --format json 2>/dev/null")
+    local info = vim.fn.system(wezterm_bin .. " cli list --format json 2>/dev/null")
     local ok, panes = pcall(vim.json.decode, info)
     if ok then
       for _, p in ipairs(panes) do
@@ -54,7 +77,7 @@ local function build_split_cmd(shell_cmd, env_table)
   local percent = pane_ids[#pane_ids] and "50" or "35"
   local dir = smart_dir(target)
   if backend == "wezterm" then
-    local cmd = { "wezterm", "cli", "split-pane", "--pane-id", tostring(target), dir, "--percent", percent }
+    local cmd = { wezterm_bin, "cli", "split-pane", "--pane-id", tostring(target), dir, "--percent", percent }
     if env_table then
       for k, v in pairs(env_table) do
         table.insert(cmd, "--env")
@@ -79,7 +102,7 @@ end
 local function kill_all()
   for _, id in ipairs(pane_ids) do
     if backend == "wezterm" then
-      vim.fn.system("wezterm cli kill-pane --pane-id " .. id)
+      vim.fn.system(wezterm_bin .. " cli kill-pane --pane-id " .. id)
     else
       vim.fn.system("tmux kill-pane -t " .. id .. " 2>/dev/null")
     end
@@ -89,6 +112,7 @@ end
 
 --- 새 외부 pane에 standalone claude CLI 실행 (복수 가능)
 function M.open()
+  ensure_init()
   if not backend then
     vim.notify("claude-pane: wezterm/tmux 환경이 아닙니다", vim.log.levels.WARN)
     return
@@ -105,6 +129,7 @@ end
 ---@param env_table table    CLAUDE_CODE_SSE_PORT 등 MCP 연결용 env
 ---@return string[]?
 function M.external_cmd(cmd_string, env_table)
+  ensure_init()
   if not backend then
     vim.notify("claude-pane: wezterm/tmux 환경이 아닙니다", vim.log.levels.WARN)
     return nil
@@ -117,6 +142,7 @@ end
 --- 외부 pane 사용 가능 여부
 ---@return boolean
 function M.is_available()
+  ensure_init()
   return backend ~= nil
 end
 
