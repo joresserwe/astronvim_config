@@ -36,7 +36,7 @@ Non-obvious wrapper behaviors — don't naively replace:
 - **Autoformat off by default** — don't assume format-on-save.
 - `modules/ui/` one role per file: statusline→`lualine.lua`, tabline→`bufferline.lua`, winbar→`dropbar.lua`.
 - All `enabled = false` specs centralized in `modules/disabled.lua`.
-- AstroNvim docs via context7: `/websites/astronvim`.
+- AstroNvim docs via web search (`docs.astronvim.com`).
 
 ## Gotchas
 
