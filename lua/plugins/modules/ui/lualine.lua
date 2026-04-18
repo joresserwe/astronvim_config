@@ -123,8 +123,4 @@ return {
       extensions = { "fugitive" },
     },
   },
-  {
-    "rebelot/heirline.nvim",
-    opts = function(_, opts) opts.statusline = nil end,
-  },
 }
