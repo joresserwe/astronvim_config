@@ -5,12 +5,14 @@ Personal Neovim config on **AstroNvim v6** + **lazy.nvim**. Lua, Korean comments
 Runs on **macOS (native)** and **WinOS (WSL2 Ubuntu)** from a single shared repo — no `mac/`/`win/` split. OS differences are handled inline via `core/platform.lua` + `cond =` plugin gating. Single `lazy-lock.json` shared across both. OS isolation rule: a macOS-only edit must not touch WinOS-only code, and vice versa; portable changes apply to both 1:1.
 
 Known OS/environment-sensitive files (exploration map — open these first for cross-platform work):
+- `integrations/wezterm.lua` — wezterm OSC 1337 user_var broadcast (tmux DCS passthrough included).
+- `integrations/clipboard.lua` — WSL2-only clipboard provider (win32yank/clip.exe fallback).
 - `modules/utils/im-select.lua` — IME switcher, macOS vs WinOS binaries.
 - `modules/editing-support/ai/claude-pane.lua` — depends on wezterm/tmux env vars and hardcoded shell.
 
 ## Architecture
 
-`init.lua` → `lazy_setup.lua` → `polish.lua`. Load order: AstroNvim core → `community.lua` → `plugins/`. Override AstroCommunity opts from `plugins/` (loaded after).
+`init.lua` → `lazy_setup.lua` → `polish.lua`. Load order: AstroNvim core → `community.lua` → `plugins/`. Override AstroCommunity opts from `plugins/` (loaded after). `polish.lua` dispatches post-load env setup to `lua/integrations/*`.
 
 Foundation plugins merge user config from sibling dirs — not colocated:
 - **AstroCore** (`plugins/astrocore.lua`) ← `lua/core/` (options, mappings, autocmds, diagnostics)
