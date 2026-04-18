@@ -88,5 +88,3 @@ if platform.is_wsl then
     -- 둘 다 없으면 기본 provider로 fallback (대개 무동작). notify 없음.
   end)
 end
-
-if true then return end -- WARN: 이 줄을 제거하면 아래 코드가 활성화됩니다
