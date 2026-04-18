@@ -18,8 +18,8 @@ return {
     -- vim options can be configured here
     opts.options = extend(opts.options, require("core.options").options)
 
-    -- vim options can be configured here
-    opts.filetypes = extend(opts.options, require("core.options").filetypes)
+    -- filetype detection rules (see `:h vim.filetype.add`)
+    opts.filetypes = extend(opts.filetypes, require("core.options").filetypes)
 
     -- Mappings can be configured through AstroCore as well.
     opts.mappings = extend(opts.mappings, require "core.mappings"(opts))
