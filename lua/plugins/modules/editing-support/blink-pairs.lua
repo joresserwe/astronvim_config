@@ -1,7 +1,7 @@
 return {
   {
     "saghen/blink.pairs",
-    version = "^1",
+    version = "*",
     dependencies = { "saghen/blink.download" },
     event = "InsertEnter",
     opts = {},
