@@ -27,9 +27,6 @@ return {
     -- User commands
     opts.commands = extend(opts.commands, require "core.commands")
 
-    -- Configure buffer local auto commands
-    opts.autocmds = extend(opts.autocmds, require "core.autocmds")
-
     -- Treesitter configuration (highlight, indent, parsers)
     opts.treesitter = extend(opts.treesitter, require("lsp.installer").treesitter)
   end,

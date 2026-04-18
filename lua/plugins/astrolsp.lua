@@ -38,14 +38,8 @@ return {
       -- customize language server configuration options passed to `lspconfig`
       opts.config = extend(opts.config, require("lsp.config").config)
 
-      -- Configure buffer local auto commands to add when attaching a language server
-      opts.autocmds = extend(opts.autocmds, require "lsp.autocmds")
-
       -- mappings to be set up on attaching of a language server
       opts.mappings = extend(opts.mappings, require "lsp.mappings"(opts))
-
-      -- A custom `on_attach` function to be run after the default `on_attach` function
-      opts.on_attach = require "lsp.on_attach"
     end
   },
 }
