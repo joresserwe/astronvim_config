@@ -17,6 +17,7 @@ return {
   },
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
+    event = "VeryLazy", -- 누락 패키지 자동 설치 체크는 startup 이후로 지연해도 무해
     opts = require("lsp.installer").mason,
   },
   {
