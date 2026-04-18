@@ -1,5 +1,6 @@
 return {
   "Mofiqul/vscode.nvim",
+  lazy = true,
   opts = {
     transparent = true,
     italic_comments = true,
