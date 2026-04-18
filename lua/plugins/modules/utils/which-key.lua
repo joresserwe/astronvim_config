@@ -5,5 +5,8 @@ return {
       { "<auto>", mode = "nixsotc" },
       { "s", mode = "nxo" },
     },
+    win = {
+      border = "rounded",
+    },
   },
 }
