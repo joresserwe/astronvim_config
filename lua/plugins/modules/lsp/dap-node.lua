@@ -12,8 +12,8 @@ return {
       executable = {
         command = "node",
         args = {
-          require("mason-registry").get_package("js-debug-adapter"):get_install_path()
-            .. "/js-debug/src/dapDebugServer.js",
+          -- mason 2.0: get_install_path() 제거됨. 표준 경로로 직접 참조.
+          vim.fn.stdpath "data" .. "/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js",
           "${port}",
         },
       },
